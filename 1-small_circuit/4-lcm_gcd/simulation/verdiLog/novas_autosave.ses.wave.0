@@ -1,0 +1,64 @@
+Magic 271485
+Revision Verdi3_K-2015.09-SP1-1
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 28 1607 310 193 70
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/IC/Desktop/1-small_circuit/4-lcm_gcd/simulation/novas.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 22775.612472 208615.612473
+cursor 78027.25024948530
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 2
+; marker line index
+markerPos 5
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/IC/Desktop/1-small_circuit/4-lcm_gcd/simulation/novas.fsdb"
+addSignal -h 15 /lcm_gcd_tb/en
+addSignal -h 15 -holdScope clk
+addSignal -h 15 -holdScope rstn
+addSignal -h 15 -UNSIGNED -UDEC -holdScope A[7:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope B[7:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope lcm_out[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope gcd_out[7:0]
+addSignal -h 15 -holdScope vld_out
+addSignal -h 15 -UNSIGNED -UDEC -holdScope lcm_ref[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope gcd_ref[7:0]
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

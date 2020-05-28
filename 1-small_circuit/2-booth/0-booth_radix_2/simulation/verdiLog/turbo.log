@@ -1,0 +1,3 @@
+Command Line: /opt/Synopsys/Verdi2015/platform/LINUXAMD64/bin/Novas -sv -nologo ../booth_fsm.v ../booth_fsm_tb.v -ssf ./novas.fsdb
+uname(Linux IC 2.6.32-573.el6.x86_64 #1 SMP Wed Jul 1 18:23:37 EDT 2015 x86_64)
+au time 10372.227338 16.923427 559.214986 delta 293707776 293707776 total 668860416 668860416

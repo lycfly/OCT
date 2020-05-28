@@ -1,0 +1,61 @@
+Magic 271485
+Revision Verdi3_K-2015.09-SP1-1
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 28 1129 281 100 65
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/IC/Desktop/1-Find_job/0-small-circuits/3-clk_select/simulation/novas.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 17378.770950 70539.598536
+cursor 12000.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 1
+; marker line index
+markerPos 7
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/IC/Desktop/1-Find_job/0-small-circuits/3-clk_select/simulation/novas.fsdb"
+addSignal -h 15 /clk_select_tb/clk1
+addSignal -h 15 -holdScope clk2
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 -holdScope sel
+addSignal -h 15 -holdScope clk_comb
+addSignal -h 15 -holdScope clk_reg1
+addSignal -h 15 -holdScope clk_reg2
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

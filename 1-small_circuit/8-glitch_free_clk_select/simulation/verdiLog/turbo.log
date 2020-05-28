@@ -1,0 +1,2 @@
+Command Line: /opt/Synopsys/Verdi2015/platform/LINUXAMD64/bin/Novas -sv -nologo ../clk_select1.v ../clk_select2.v ../clk_select_tb.v -ssf ./novas.fsdb
+uname(Linux IC 2.6.32-573.el6.x86_64 #1 SMP Wed Jul 1 18:23:37au time 2281.57197au time 2726.874898 71.601115 95.382500 delta 288215040 288215040 total 663367680 663367680

@@ -1,0 +1,66 @@
+@verdi rc file Version 1.0
+[General]
+VerdiVersion = Verdi3_K-2015.09-SP1-1
+[KeyNote]
+Line1 = Automatic Backup 0
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+[hb]
+postSimFile = /home/IC/Desktop/1-small_circuit/3-div/simulation/novas.fsdb
+syncTime = 148000
+viewport = 232 25 1437 934 468 373 228 898
+activeNode = "div_fsm_tb.U_DIV_FSM_0"
+activeScope = "div_fsm_tb.U_DIV_FSM_0"
+activeFile = "../div_fsm.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 66
+baMode = False
+srcLineNum = True
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = False
+Scope1 = "div_fsm_tb.U_DIV_FSM_0"
+sdfCheckUndef = FALSE
+[hb.sourceTab.1]
+scope = div_fsm_tb.U_DIV_FSM_0
+File = /home/IC/Desktop/1-small_circuit/3-div/div_fsm.v
+Line = 67
+[imp.design1]
+dbEnum =  oh
+invokeDir = /home/IC/Desktop/1-small_circuit/3-div/simulation
+design = DebussyLib
+hostCommand = hostCommand -sv ../div_fsm.v ../div_fsm_tb.v
+[nMemoryManager]
+FsdbFile = /home/IC/Desktop/1-small_circuit/3-div/simulation/novas.fsdb
+UserActionNum = 0
+nMemWindowNum = 0
+[wave.0]
+viewPort = 0 28 1437 371 169 65
+SessionFile = /home/IC/Desktop/1-small_circuit/3-div/simulation/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSync = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE

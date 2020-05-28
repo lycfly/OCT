@@ -1,0 +1,5 @@
+debImport "-sv"
+wvCreateWindow
+wvOpenFile -win $_nWave2 \
+           {/home/IC/Desktop/1-Find_job/0-small-circuits/2-zuse_and_feizuse/simulation/novas.fsdb}
+debExit

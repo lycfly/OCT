@@ -1,0 +1,117 @@
+debImport "-sv" "../clk_div.v" "../clk_div_tb.v"
+debLoadSimResult \
+           /home/IC/Desktop/1-Find_job/0-small-circuits/1-clk_div/simulation/novas.fsdb
+wvCreateWindow
+verdiWindowResize -win $_Verdi_1 "510" "190" "901" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "912" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "978" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1046" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1121" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1154" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1183" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1184" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1211" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1216" "700"
+verdiWindowResize -win $_Verdi_1 "510" "190" "1221" "700"
+verdiWindowResize -win $_Verdi_1 "510" "189" "1221" "701"
+verdiWindowResize -win $_Verdi_1 "510" "175" "1221" "715"
+verdiWindowResize -win $_Verdi_1 "510" "149" "1221" "741"
+verdiWindowResize -win $_Verdi_1 "510" "142" "1221" "748"
+verdiWindowResize -win $_Verdi_1 "510" "138" "1221" "752"
+verdiWindowResize -win $_Verdi_1 "510" "118" "1221" "772"
+verdiWindowResize -win $_Verdi_1 "510" "105" "1221" "785"
+verdiWindowResize -win $_Verdi_1 "510" "97" "1221" "793"
+verdiWindowResize -win $_Verdi_1 "510" "82" "1221" "808"
+verdiWindowResize -win $_Verdi_1 "510" "72" "1221" "818"
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "clk_in" -win $_nTrace1
+srcSelect -win $_nTrace1 -range {20 21 3 3 5 4}
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "rst_n" -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "clk_in" -win $_nTrace1
+srcSelect -signal "rst_n" -win $_nTrace1
+srcSelect -signal "clk_out" -win $_nTrace1
+srcAddSelectedToWave -win $_nTrace1
+wvSetCursor -win $_nWave2 2546.539002 -snap {("G1" 2)}
+srcDeselectAll -win $_nTrace1
+debReload
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 8205.514563 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 13185.413057 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 14317.208169 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 19070.747640 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 7809.386274 -snap {("G1" 1)}
+srcHBSelect "clk_div_tb.U_CLK_DIV_0" -win $_nTrace1
+srcHBSelect "clk_div_tb.U_CLK_DIV_0" -win $_nTrace1
+srcHBSelect "clk_div_tb.U_CLK_DIV_0" -win $_nTrace1
+srcSetScope -win $_nTrace1 "clk_div_tb.U_CLK_DIV_0" -delim "."
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "cnt1" -win $_nTrace1
+srcSelect -signal "cnt2" -win $_nTrace1
+srcSelect -signal "clk_div1" -win $_nTrace1
+srcSelect -signal "clk_div2" -win $_nTrace1
+srcAddSelectedToWave -win $_nTrace1
+wvSetCursor -win $_nWave2 9280.719920 -snap {("G1" 6)}
+wvSetCursor -win $_nWave2 11204.771610 -snap {("G1" 1)}
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "HALF_DIV" -win $_nTrace1
+srcSelect -signal "WIDTH" -win $_nTrace1
+srcAddSelectedToWave -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "clk_div2" -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+debReload
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "WIDTH" -win $_nTrace1
+srcSelect -signal "HALF_DIV" -win $_nTrace1
+srcAddSelectedToWave -win $_nTrace1
+wvSetCursor -win $_nWave2 8035.745296 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 8205.514563 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 5206.257516 -snap {("G1" 1)}
+wvZoom -win $_nWave2 12676.105256 13185.413057
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 8987.552021 -snap {("G1" 6)}
+wvSetCursor -win $_nWave2 11266.086336 -snap {("G1" 4)}
+srcDeselectAll -win $_nTrace1
+wvSelectSignal -win $_nWave2 {( "G1" 4 )} 
+wvSetCursor -win $_nWave2 8860.966781 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 10823.037997 -snap {("G1" 1)}
+srcDeselectAll -win $_nTrace1
+debReload
+wvSetCursor -win $_nWave2 8038.162723 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 11202.793716 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 7974.870103 -snap {("G1" 1)}
+srcDeselectAll -win $_nTrace1
+debReload
+wvSetCursor -win $_nWave2 4114.020291 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 7784.992243 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 11139.501096 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 14114.254230 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 17025.714743 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 19873.882637 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 7974.870103 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 8164.747962 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 9050.844641 -snap {("G1" 4)}
+wvSetCursor -win $_nWave2 8924.259401 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 11139.501096 -snap {("G1" 1)}
+srcDeselectAll -win $_nTrace1
+debReload
+wvSetCursor -win $_nWave2 6962.188185 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 9683.770839 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 10063.526558 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 9810.356079 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 9873.648699 -snap {("G1" 1)}
+debExit

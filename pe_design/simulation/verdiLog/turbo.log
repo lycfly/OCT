@@ -1,0 +1,5 @@
+Command Line: /opt/Synopsys/Verdi2015/platform/LINUXAMD64/bin/Novas -sv -nologo ../True_dual_ports_ram.v ../fifo.v ../load_fmap.v ../load_weight.v ../macc.v ../macc_2stage.v ../macc_control.v ../pe.v ../pe_tb.v -ssf ./novas.fsdb
+uname(Linux IC 2.6.32-573.el6.x86_64 #1 SMP Wed Jul 1 18:23:37 EDT 2015 x86_64)
+file I/O: rcFileP.cpp:61, fgetc(), errno: 21, msg: Is a directory
+file I/O: rcFileP.cpp:61, fgetc(), errno: 21, msg: Is a directory
+au time 32387.779302 528.381674 1245.161707 delta 422281216 422281216 total 797433856 797433856

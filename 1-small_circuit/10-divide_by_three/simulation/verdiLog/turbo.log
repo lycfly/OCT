@@ -1,0 +1,3 @@
+Command Line: /opt/Synopsys/Verdi2015/platform/LINUXAMD64/bin/Novas -sv -nologo ../divide_by_three.v ../divide_by_three_tb.v -ssf ./novas.fsdb
+uname(Linux IC 2.6.32-573.el6.x86_64 #1 SMP Wed Jul 1 18:23:37 EDT 2015 x86_64)
+au time 13925.532673 32.446067 391.318510 delta 292941824 292941824 total 668090368 668090368

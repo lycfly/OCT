@@ -1,0 +1,65 @@
+Magic 271485
+Revision Verdi3_K-2015.09-SP1-1
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 28 1437 371 169 65
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/IC/Desktop/1-small_circuit/3-div/simulation/novas.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 0.000000 236331.220286
+cursor 148000.000000
+marker 76000.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 0
+; marker line index
+markerPos 11
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/IC/Desktop/1-small_circuit/3-div/simulation/novas.fsdb"
+addSignal -h 15 /div_fsm_tb/clk
+addSignal -h 15 -holdScope rstn
+addSignal -h 15 -holdScope en
+addSignal -h 15 -holdScope ready
+addSignal -h 15 -UNSIGNED -UDEC -holdScope dividend[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope divisor[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope quotient[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope remainder[15:0]
+addSignal -h 15 -holdScope vld_out
+addSignal -h 15 -UNSIGNED -UDEC -holdScope quotient_ref[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope remainder_ref[15:0]
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

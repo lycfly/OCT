@@ -1,0 +1,68 @@
+@verdi rc file Version 1.0
+[General]
+VerdiVersion = Verdi3_K-2015.09-SP1-1
+[KeyNote]
+Line1 = Automatic Backup 0
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+[hb]
+postSimFile = /home/IC/Desktop/0-onchiptrain/simulation/novas.fsdb
+syncTime = 675000
+viewport = 237 25 1267 1000 323 406 403 1265
+activeNode = "macc_control_tb.load_fmap_0"
+activeScope = "macc_control_tb.load_fmap_0"
+activeFile = "../load_fmap.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 219
+baMode = False
+srcLineNum = True
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = False
+Scope1 = "macc_control_tb.load_fmap_0"
+Scope2 = "macc_control_tb"
+multipleSelection = 1 18 2 0 0
+sdfCheckUndef = FALSE
+[hb.sourceTab.1]
+scope = macc_control_tb.load_fmap_0
+File = /home/IC/Desktop/0-onchiptrain/load_fmap.v
+Line = 220
+[imp.design1]
+dbEnum =  oh
+invokeDir = /home/IC/Desktop/0-onchiptrain/simulation
+design = DebussyLib
+hostCommand = hostCommand -sv ../Constant.v ../True_dual_ports_ram.v ../fifo.v ../load_fmap.v ../load_weight.v ../macc.v ../macc_2stage.v ../macc_control.v ../macc_control_tb.v
+[nMemoryManager]
+FsdbFile = /home/IC/Desktop/0-onchiptrain/simulation/novas.fsdb
+UserActionNum = 0
+nMemWindowNum = 0
+[wave.0]
+viewPort = 0 28 1267 406 196 54
+SessionFile = /home/IC/Desktop/0-onchiptrain/simulation/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSync = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE

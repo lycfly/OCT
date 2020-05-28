@@ -1,0 +1,65 @@
+debImport "-sv" "../qdiv.v" "../qdiv_tb.v"
+wvCreateWindow
+wvOpenFile -win $_nWave2 \
+           {/home/IC/Desktop/1-Find_job/0-small-circuits/0-int_divider/1-opencore_div/simulation/novas.fsdb}
+verdiDockWidgetSetCurTab -dock widgetDock_<Decl._Tree>
+verdiDockWidgetSetCurTab -dock widgetDock_<Inst._Tree>
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+debReload
+verdiDockWidgetHide -dock windowDock_nWave_2
+nsMsgSelect -range {0 0-0}
+nsMsgAction -tab cmpl -index {0 0}
+nsMsgSelect -range {0 0-0}
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+nsMsgSelect -range {0 1-1}
+nsMsgAction -tab cmpl -index {0 1}
+nsMsgSelect -range {0 1-1}
+nsMsgSelect -range {0 2-2}
+nsMsgAction -tab cmpl -index {0 2}
+nsMsgSelect -range {0 2-2}
+nsMsgSelect -range {0 3-3}
+nsMsgAction -tab cmpl -index {0 3}
+nsMsgSelect -range {0 3-3}
+nsMsgSelect -range {0 4-4}
+nsMsgSelect -range {0 0-0}
+nsMsgAction -tab cmpl -index {0 0}
+nsMsgSelect -range {0 0-0}
+nsMsgSelect -range {0 5-5}
+nsMsgAction -tab cmpl -index {0 5}
+nsMsgSelect -range {0 5-5}
+nsMsgSelect -range {0 6-6}
+nsMsgAction -tab cmpl -index {0 6}
+nsMsgSelect -range {0 6-6}
+nsMsgSelect -range {0 5-5}
+nsMsgAction -tab cmpl -index {0 5}
+nsMsgSelect -range {0 5-5}
+nsMsgSelect -range {0 6-6}
+nsMsgAction -tab cmpl -index {0 6}
+nsMsgSelect -range {0 6-6}
+nsMsgSelect -range {0 4-4}
+nsMsgAction -tab cmpl -index {0 4}
+nsMsgSelect -range {0 4-4}
+nsMsgSelect -range {0 5-5}
+nsMsgAction -tab cmpl -index {0 5}
+nsMsgSelect -range {0 5-5}
+nsMsgSelect -range {0 3-3}
+nsMsgAction -tab cmpl -index {0 3}
+nsMsgSelect -range {0 3-3}
+nsMsgSelect -range {0 4-4}
+nsMsgAction -tab cmpl -index {0 4}
+nsMsgSelect -range {0 4-4}
+nsMsgSelect -range {0 1-1}
+nsMsgSelect -range {0 0-0}
+nsMsgAction -tab cmpl -index {0 0}
+nsMsgSelect -range {0 0-0}
+srcDeselectAll -win $_nTrace1
+debReload
+nsMsgSelect -range {0 0-0}
+nsMsgAction -tab cmpl -index {0 0}
+nsMsgSelect -range {0 0-0}
+srcDeselectAll -win $_nTrace1
+debReload
+debExit

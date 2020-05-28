@@ -1,0 +1,3 @@
+Command Line: /opt/Synopsys/Verdi2015/platform/LINUXAMD64/bin/Novas -sv -nologo ../seq_mod3_detector.v ../seq_mod3_detector_tb.v -ssf ./novas.fsdb
+uname(Linux IC 2.6.32-573.el6.x86_64 #1 SMP Wed Jul 1 18:23:37 EDT 2015 x86_64)
+au time 1531.956703 35.985530 120.570671 delta 292634624 292634624 total 667787264 667787264

@@ -1,0 +1,2 @@
+Simulation Mode: VCS
+stop -line 20 -file /home/IC/Desktop/1-small_circuit/2-booth/booth_fsm_tb.v 

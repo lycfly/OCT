@@ -1,0 +1,65 @@
+Magic 271485
+Revision Verdi3_K-2015.09-SP1-1
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 28 1377 327 250 65
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/IC/Desktop/1-small_circuit/9-I2S/simulation/novas.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 0.000000 4040000.000000
+cursor 760000.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 2
+; marker line index
+markerPos 11
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/IC/Desktop/1-small_circuit/9-I2S/simulation/novas.fsdb"
+addSignal -h 15 /I2S_master_tb/clk_in
+addSignal -h 15 -UNSIGNED -HEX -holdScope data_in[15:0]
+addSignal -h 15 -holdScope rstn
+addSignal -h 15 -holdScope enable
+addSignal -h 15 -holdScope DATA
+addSignal -h 15 -holdScope WS
+addSignal -h 15 -holdScope clk
+addSignal -h 15 -holdScope send_over
+addSignal -h 15 -UNSIGNED -HEX -holdScope L_DATA[15:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope R_DATA[15:0]
+addSignal -h 15 -holdScope recv_over
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

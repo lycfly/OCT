@@ -1,0 +1,75 @@
+debImport "-sv" "../clk_select.v" "../clk_select_tb.v"
+debLoadSimResult \
+           /home/IC/Desktop/1-Find_job/0-small-circuits/3-clk_select/simulation/novas.fsdb
+wvCreateWindow
+verdiWindowResize -win $_Verdi_1 "509" "190" "901" "700"
+verdiWindowResize -win $_Verdi_1 "508" "190" "902" "700"
+verdiWindowResize -win $_Verdi_1 "505" "190" "905" "700"
+verdiWindowResize -win $_Verdi_1 "492" "190" "918" "700"
+verdiWindowResize -win $_Verdi_1 "466" "190" "944" "700"
+verdiWindowResize -win $_Verdi_1 "433" "190" "977" "700"
+verdiWindowResize -win $_Verdi_1 "372" "190" "1038" "700"
+verdiWindowResize -win $_Verdi_1 "331" "190" "1079" "700"
+verdiWindowResize -win $_Verdi_1 "313" "190" "1097" "700"
+verdiWindowResize -win $_Verdi_1 "298" "190" "1112" "700"
+verdiWindowResize -win $_Verdi_1 "297" "190" "1113" "700"
+verdiWindowResize -win $_Verdi_1 "296" "190" "1114" "700"
+verdiWindowResize -win $_Verdi_1 "287" "190" "1123" "700"
+verdiWindowResize -win $_Verdi_1 "284" "190" "1126" "700"
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "clk1" -win $_nTrace1
+srcSelect -signal "clk2" -win $_nTrace1
+srcSelect -signal "rst_n" -win $_nTrace1
+srcSelect -signal "sel" -win $_nTrace1
+srcSelect -signal "clk_out" -win $_nTrace1
+srcAddSelectedToWave -win $_nTrace1
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 33054.545455 -snap {("G1" 5)}
+wvSetCursor -win $_nWave2 33054.545455 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 33810.695187 -snap {("G1" 1)}
+srcDeselectAll -win $_nTrace1
+debReload
+srcDeselectAll -win $_nTrace1
+debReload
+wvSetCursor -win $_nWave2 35106.951872 -snap {("G1" 5)}
+wvSetCursor -win $_nWave2 36079.144385 -snap {("G1" 5)}
+wvZoomIn -win $_nWave2
+wvZoomIn -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomIn -win $_nWave2
+wvZoom -win $_nWave2 33977.185669 34191.089412
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 34032.892151 -snap {("G1" 5)}
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 33600.966732 -snap {("G1" 5)}
+wvSetCursor -win $_nWave2 31931.831212 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 33454.551335 -snap {("G1" 4)}
+wvSetCursor -win $_nWave2 29882.015661 -snap {("G1" 1)}
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 35021.232076 -snap {("G1" 1)}
+wvDisplayGridCount -win $_nWave2 -off
+wvGetSignalClose -win $_nWave2
+wvReloadFile -win $_nWave2
+wvSetCursor -win $_nWave2 34259.872014 -snap {("G1" 5)}
+wvSetCursor -win $_nWave2 31624.394878 -snap {("G1" 0)}
+wvDisplayGridCount -win $_nWave2 -off
+wvGetSignalClose -win $_nWave2
+wvReloadFile -win $_nWave2
+wvSetCursor -win $_nWave2 37305.312262 -snap {("G1" 3)}
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 32838.502674 -snap {("G1" 4)}
+wvZoomIn -win $_nWave2
+wvSetCursor -win $_nWave2 28475.935829 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 29232.620321 -snap {("G1" 3)}
+wvSetCursor -win $_nWave2 29446.524064 -snap {("G1" 2)}
+wvZoomOut -win $_nWave2
+wvZoomIn -win $_nWave2
