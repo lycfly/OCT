@@ -10,10 +10,12 @@ Command arguments:
     ../macc_2stage.v
     ../macc_control.v
     ../pe.v
-    ../pe_tb.v
+    ../pe_mode0_tb.v
+    ../pe_mode1_tb.v
 
 Highest level modules:
 macc_2stage
-pe_tb
+pe_mode0_tb
+pe_mode1_tb
 
 Total	0 error(s),   0 warning(s)

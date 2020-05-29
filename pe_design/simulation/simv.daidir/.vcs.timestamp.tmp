@@ -1,5 +1,5 @@
 0 
-51
+52
 +cli+1
 +cli+3
 +define+
@@ -47,15 +47,16 @@
 ../macc_2stage.v
 ../macc_control.v
 ../pe.v
-../pe_tb.v
+../pe_mode0_tb.v
+../pe_mode1_tb.v
 /opt/Synopsys/VCS2014/amd64/bin/vcs1
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/novas.tab
 ZONMCM
 80
-sysc_uni_pwd=/home/IC/Desktop/0-onchiptrain/OCT/pe_design/simulation
+sysc_uni_pwd=/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/simulation
 XMODIFIERS=@im=ibus
-XDG_SESSION_COOKIE=a0bfd28e837df0a07240a6770000000b-1590628655.94687-710139321
-XAUTHORITY=/var/run/gdm/auth-for-IC-aJuoxu/database
+XDG_SESSION_COOKIE=a0bfd28e837df0a07240a6770000000b-1590714417.254115-1902673987
+XAUTHORITY=/var/run/gdm/auth-for-IC-Rsagp6/database
 WINDOWPATH=1
 Virtuoso_HOME=/opt/Cadence/IC617
 Verdi_HOME=/opt/Synopsys/Verdi2015
@@ -74,14 +75,14 @@ TOOL_HOME=/opt/Synopsys/VCS2014/amd64
 Synplify_HOME=/opt/Synopsys/Synplify2015
 Synopsys_Dir=/opt/Synopsys
 StarRC_HOME=/opt/Synopsys/StarRC2015
-SSH_AUTH_SOCK=/tmp/keyring-4Knua7/socket.ssh
+SSH_AUTH_SOCK=/tmp/keyring-kR9Sdf/socket.ssh
 SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
 SNPSLMD_LICENSE_FILE=/opt/Synopsys/License/License.dat:/opt/Synopsys/VCS2014/flexlm//license.dat
-SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3354,unix/unix:/tmp/.ICE-unix/3354
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3257,unix/unix:/tmp/.ICE-unix/3257
 SCRNAME=vcs
 SCRIPT_NAME=vcs
 SCL_HOME=/opt/Synopsys/SCL11.11
-ROWS=39
+ROWS=49
 RC_HOME=/opt/Cadence/RC11
 QT_IM_MODULE=ibus
 QTLIB=/usr/lib64/qt-3.3/lib
@@ -109,8 +110,8 @@ Hspice_HOME=/opt/Synopsys/Hspice2016
 HISTCONTROL=ignoredups
 G_BROKEN_FILENAMES=1
 GTK_RC_FILES=/etc/gtk/gtkrc:/home/IC/.gtkrc-1.2-gnome2
-GNOME_KEYRING_SOCKET=/tmp/keyring-4Knua7/socket
-GNOME_KEYRING_PID=3342
+GNOME_KEYRING_SOCKET=/tmp/keyring-kR9Sdf/socket
+GNOME_KEYRING_PID=3245
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 GDM_LANG=en_US.UTF-8
 GDM_KEYBOARD_LAYOUT=us
@@ -119,7 +120,7 @@ Formality_HOME=/opt/Synopsys/Formality2016
 Encounter_HOME=/opt/Cadence/INNOVUS15
 DFT_HOME=/opt/Mentor/Tessent2013/
 DESKTOP_SESSION=gnome
-DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-vtCpNQj1Hb,guid=df52e685927d2fd99fa6d02d00000069
+DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Fno97QUIcf,guid=3df24e210b07f5a9ce8ba85b0000001d
 Concept_dir=/opt/Concept
 Cadence_Dir=/opt/Cadence
 CVS_RSH=ssh
@@ -133,17 +134,18 @@ CALIBRE_2013_4_ALLOW_IXL_ON_RHEL6=101010
 AGILEESOFD_LICENSE_FILE=/opt/KeySight/ADS2015/License/license.lic
 ADS_HOME=/opt/KeySight/ADS2015
 0
-12
-1590485081 /home/IC/Desktop/0-onchiptrain/OCT/Constant.v
-1590668473 ../pe_tb.v
-1590668465 ../pe.v
-1590398590 ../macc_control.v
-1587462751 ../macc_2stage.v
-1587462751 ../macc.v
-1590646311 ../load_weight.v
-1590636686 ../load_fmap.v
-1587462751 ../fifo.v
-1590634266 ../True_dual_ports_ram.v
+13
+1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v
+1590717392 ../pe_mode1_tb.v
+1590715371 ../pe_mode0_tb.v
+1590676142 ../pe.v
+1590676142 ../macc_control.v
+1590676142 ../macc_2stage.v
+1590676142 ../macc.v
+1590676142 ../load_weight.v
+1590676142 ../load_fmap.v
+1590676142 ../fifo.v
+1590715060 ../True_dual_ports_ram.v
 1453442056 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/novas.tab
 1393560725 /opt/Synopsys/VCS2014/amd64/lib/vcsdp.tab
 5

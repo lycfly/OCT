@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-`include "/home/IC/Desktop/0-onchiptrain/OCT/Constant.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v"
 
 
 module True_dual_ports_ram

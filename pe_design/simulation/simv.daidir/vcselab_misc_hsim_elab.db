@@ -1,5 +1,5 @@
 psSimBaseName                      	simv
-pDaiDir                            	/home/IC/Desktop/0-onchiptrain/OCT/pe_design/simulation/simv.daidir
+pDaiDir                            	/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/simulation/simv.daidir
 destPath                           	csrc/
 hsMainFileCount                    	0
 hsMainFileName                     	dummy
@@ -640,7 +640,7 @@ fHsimMxConnFrc                     	0
 fHsimNewForceCbkVec                	0
 fHsimNewForceCbkVecDiag            	0
 fHsimMdbReplaceVpdHighConn         	1
-fHsimVpdHighConnReplaced           	0
+fHsimVpdHighConnReplaced           	1
 fHsimVpdOptSVTypes                 	1
 fHsimDlyInitFrc                    	0
 fHsimCompactVpdFn                  	1
