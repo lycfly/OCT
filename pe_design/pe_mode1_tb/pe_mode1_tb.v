@@ -10,6 +10,13 @@
 // Description:
 //
 // -----------------------------------------------------------------
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/fifo.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/True_dual_ports_ram.v"
 
 `timescale 1ns/1ps
 
@@ -33,6 +40,7 @@ reg        [PARA_WIDTH-1:0] q;
 reg        [PARA_WIDTH-1:0] p;
 reg        [PARA_WIDTH-1:0] j;
 reg        [PARA_WIDTH-1:0] k;
+reg        [PARA_WIDTH-1:0] T;
 reg                         start_config;
 reg                         start_weight_load;
 reg                         start_feature_load;
@@ -52,20 +60,21 @@ wire                              psum_acc_finish;
 wire                              psum_out_valid;
 wire                              fifo_full_fmap;
 wire                              fifo_full_filter;
-wire signed [PSUM_DATA_WIDTH-1:0] psum_out;
+wire   [PSUM_DATA_WIDTH-1:0]      psum_out;
 wire                              psum_out_en;
-wire signed [PSUM_DATA_WIDTH-1:0] psum_to_bus;
+wire   [PSUM_DATA_WIDTH-1:0]      psum_to_bus;
 
 
 always #1 clk = ~clk;
 initial begin
   clk = 0;
-  S = 3;
+  S = 12;
   U = 1;
-  q = 4;
+  q = 1;
   p = 3;
-  j = 2;
-  k = 2;
+  j = 3;
+  k = 3;
+  T = 34;
   start_config = 0;
   start_weight_load = 0;
   start_feature_load = 0;
@@ -171,7 +180,7 @@ initial begin
     transform_weight_data(1,10);    
     #60;
     transform_weight_data(10,37);
-    
+    transform_weight_data(37,103);
     #320
     start_psum_in_load <= 1;
     #2 start_psum_in_load <= 0;
@@ -201,6 +210,7 @@ U_PE_0
    .p                  ( p                  ),
    .j                  ( j                  ),
    .k                  ( k                  ),
+   .T                  ( T                  ),   
    .start_config       ( start_config       ),
    .start_weight_load  ( start_weight_load  ),
    .start_feature_load ( start_feature_load ),

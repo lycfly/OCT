@@ -10,6 +10,14 @@
 // Description:
 //
 // -----------------------------------------------------------------
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/fifo.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/True_dual_ports_ram.v"
+
 
 `timescale 1ns/1ps
 

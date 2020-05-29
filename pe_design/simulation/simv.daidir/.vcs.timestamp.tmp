@@ -1,5 +1,5 @@
 0 
-52
+50
 +cli+1
 +cli+3
 +define+
@@ -47,8 +47,6 @@
 ../macc_2stage.v
 ../macc_control.v
 ../pe.v
-../pe_mode0_tb.v
-../pe_mode1_tb.v
 /opt/Synopsys/VCS2014/amd64/bin/vcs1
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/novas.tab
 ZONMCM
@@ -82,7 +80,7 @@ SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3257,unix/unix:/tmp/.ICE-unix/3257
 SCRNAME=vcs
 SCRIPT_NAME=vcs
 SCL_HOME=/opt/Synopsys/SCL11.11
-ROWS=49
+ROWS=39
 RC_HOME=/opt/Cadence/RC11
 QT_IM_MODULE=ibus
 QTLIB=/usr/lib64/qt-3.3/lib
@@ -134,15 +132,13 @@ CALIBRE_2013_4_ALLOW_IXL_ON_RHEL6=101010
 AGILEESOFD_LICENSE_FILE=/opt/KeySight/ADS2015/License/license.lic
 ADS_HOME=/opt/KeySight/ADS2015
 0
-13
+11
 1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v
-1590717392 ../pe_mode1_tb.v
-1590715371 ../pe_mode0_tb.v
-1590676142 ../pe.v
-1590676142 ../macc_control.v
+1590750134 ../pe.v
+1590754881 ../macc_control.v
 1590676142 ../macc_2stage.v
 1590676142 ../macc.v
-1590676142 ../load_weight.v
+1590745289 ../load_weight.v
 1590676142 ../load_fmap.v
 1590676142 ../fifo.v
 1590715060 ../True_dual_ports_ram.v

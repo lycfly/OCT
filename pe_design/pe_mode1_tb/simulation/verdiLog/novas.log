@@ -1,0 +1,46 @@
+Verdi Release Verdi3_K-2015.09-SP1-1 (RH Linux x86_64/64bit) 01/21/2016
+(C) 1999 - 2016 by Synopsys, Inc.
+All Rights Reserved.
+www.synopsys.com
+
+This program is proprietary and confidential information of Synopsys, Inc. and 
+may be used and disclosed only as authorized in a license agreement controlling 
+such use and disclosure.
+
+
+Total number of converted HDL2CELL cells=0 (normal modules=0)
+Inferring module macc_control, file /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v, line 20~426 (Verilog)
+
+
+Module macc_control, File /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v, Line 20~426, Total error(s) 0, warning(s) 1
+
+
+Verdi design analysis: total error(s) 0, total warning(s) 1.
+---- Any errors/warnings, please refer to file /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode1_tb/simulation/verdiLog/novas.log -----------------------
+Inferring module pe, file /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v, line 18~494 (Verilog)
+
+
+Module pe, File /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v, Line 18~494, Total error(s) 0, warning(s) 1
+
+
+Verdi design analysis: total error(s) 0, total warning(s) 1.
+---- Any errors/warnings, please refer to file /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode1_tb/simulation/verdiLog/novas.log -----------------------
+Inferring module pe_mode1_tb, file ../pe_mode1_tb.v, line 23~244 (Verilog)
+
+Warning!(BA-38) "../pe_mode1_tb.v", Line: 68~68
+'always' statement is inferred as a black box because of no sensitivity list.
+
+Module pe_mode1_tb, File ../pe_mode1_tb.v, Line 23~244, Total error(s) 0, warning(s) 4
+
+
+Verdi design analysis: total error(s) 0, total warning(s) 4.
+---- Any errors/warnings, please refer to file /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode1_tb/simulation/verdiLog/novas.log -----------------------
+[Symbol Library from default setting]
+  library Path = /opt/Synopsys/Verdi2015/share/symlib/64
+  library Name = default_u
+[Symbol Library from manual setting]
+  There are 0 library path(s) and 0 library name(s):
+
+
+TS: trace fanin for pe_mode1_tb.U_PE_0.U_MACC_CONTROL_0.mac_finish_flag#339000 => cpu = 0.00
+TS: trace fanin for pe_mode1_tb.U_PE_0.U_MACC_CONTROL_0.mac_finish#337000 => cpu = 0.00

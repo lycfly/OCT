@@ -37,7 +37,7 @@ input             [PARA_WIDTH-1 : 0]            q,                        // q  
 input             [PARA_WIDTH-1 : 0]            p,                        // p   number of filters processed by a PE set
 input             [PARA_WIDTH-1 : 0]            j,                        // j   the max number of clip (0~19)
 input             [PARA_WIDTH-1 : 0]            k,                        // k   the max number of shift (0~9)
-
+input             [PARA_WIDTH-1 : 0]            T,                        // T   one outchannel of weight length when mode == 1
 
 /*input status signal*/
 input                                           start_config,             //start load config parameter
@@ -80,9 +80,11 @@ parameter OUT_DATA_WIDTH  = PSUM_DATA_WIDTH; // 2*data_width + ifpad_width
 
 reg  [ADDRESSWIDTH_W_PAD-1:0]        weight_num;
 reg  [ADDRESSWIDTH_F_PAD-1:0]        pixel_num;
+// one outchannel of weight length when mode == 1
+reg  [ADDRESSWIDTH_W_PAD-1:0]        weight_1channel_mode_1; 
 // Control Paramerters
-reg     [IFPAD_WIDTH-1:0]     Para_1Dconv_len;   // 1-D conv length 
-reg     [OFPAD_WIDTH-1:0]     Para_filter_num;   // conv filter number
+wire     [IFPAD_WIDTH-1:0]     Para_1Dconv_len;   // 1-D conv length 
+reg      [OFPAD_WIDTH-1:0]     Para_filter_num;   // conv filter number
 reg     [MAX_CLIP_WIDTH-1:0]  Para_clip_num_max; // the max number of clip (0~19)
 reg     [MAX_SHIFT_WIDTH-1:0] Para_shift_num_max;// the max number of shift (0~9)
 
@@ -94,7 +96,7 @@ wire [ADDRESSWIDTH_F_PAD-1:0]Uq;
 assign Uq = U * q;
 assign Sq = S * q;
 assign Sqp = Sq * p;
-
+assign Para_1Dconv_len = pixel_num;
 //----------------------------------------------------------------
 //                   Load Config Parameter
 //----------------------------------------------------------------
@@ -104,19 +106,22 @@ always @(posedge clk) begin
     weight_num <= 0;
     pixel_num <= 0;
     load_one_cloumn_num <= 0;
-    Para_1Dconv_len <= 0;
     Para_filter_num <= 0;
     Para_clip_num_max <= 0;
     Para_shift_num_max <= 0;
+    weight_1channel_mode_1 <= 0;
   end
   else if (start_config) begin
-    weight_num <= Sqp;
+    if(mode)
+      weight_num <= T*p;
+    else
+      weight_num <= Sqp;
     pixel_num  <= Sq;
     load_one_cloumn_num <= Uq;
-    Para_1Dconv_len <= Sq;
     Para_filter_num <= p;
     Para_clip_num_max <= j;
     Para_shift_num_max <= k;
+    weight_1channel_mode_1 <= T;
   end
 end
 
@@ -165,19 +170,22 @@ U_LOAD_FMAP_0
 //----------------------------------------------------------------
 //               Load weight Logic
 //----------------------------------------------------------------
-reg         [ADDRESSWIDTH_W_PAD-1:0]   weight_addr;
+reg                                    zero_output_flg;
+reg         [ADDRESSWIDTH_W_PAD:0]     base_weight_address;
+reg         [ADDRESSWIDTH_W_PAD:0]     weight_addr;
+wire        [ADDRESSWIDTH_W_PAD-1:0]   weight_addr_true;
 
+wire        [DATA_WIDTH-1:0]           weight_out_from_pad;
 wire        [DATA_WIDTH-1:0]           weight_out;
 wire                                   Wpad_data_ready;
 wire                                   Wpad_full;
 
-//wire weight_pe_ready;
-//reg weight_bus_ready;
-//assign weight_bus_ready = weight_in_en;
-//assign weight_pe_ready = !weight_fifo_full;
-//always@(*)begin
-//    weight_in_en = weight_pe_ready & weight_bus_ready;
-//  end
+assign weight_addr_true = weight_addr[ADDRESSWIDTH_W_PAD] ?  0 : weight_addr[ADDRESSWIDTH_W_PAD-1:0];
+
+assign zero_output_flg = (weight_addr<0 || weight_addr> (weight_num-1)) ? 1'b1:1'b0;
+
+assign weight_out = zero_output_flg? 0:weight_out_from_pad;
+
 load_weight #( 
   .DATA_WIDTH ( DATA_WIDTH ),
   .PARA_WIDTH ( PARA_WIDTH ),
@@ -193,9 +201,10 @@ U_LOAD_WEIGHT_0
    .weight_in_en       ( weight_in_en       ),
    .weight_num         ( weight_num         ),
    .pixel_num          ( pixel_num          ),
-   .raddra_filter      ( weight_addr        ),
+   .raddra_filter      ( weight_addr_true   ),
+   .base_address       ( base_weight_address),
    .fifo_full          ( fifo_full_filter   ),
-   .weight_out         ( weight_out         ),
+   .weight_out         ( weight_out_from_pad),
    .pad_data_ready     ( Wpad_data_ready    ),
    .pad_full           ( Wpad_full          ));
 
@@ -240,6 +249,8 @@ assign mac_fmap_in = fmap_out;
 assign mac_weight_in = weight_out;
 
 always @(posedge clk) psum_acc_finish = acc_finish_flag;
+wire both_pads_ready =  Wpad_data_ready & Fpad_data_ready;
+
 macc_control #(
     .DATA_WIDTH                     ( DATA_WIDTH        ),
     .IFPAD_WIDTH                    ( IFPAD_WIDTH       ),
@@ -262,7 +273,8 @@ U_MACC_CONTROL_0(
     .acc_begin                      ( acc_begin          ),
     .interrupt                      ( interrupt          ),
     .restore                        ( restore            ),//weight_restore
-    
+    .both_pads_ready                ( both_pads_ready    ),
+ 
     .external_psum                  ( external_psum      ),
     .internal_psum                  ( internal_psum      ),
     .ifmap_in                       ( mac_fmap_in        ),
@@ -285,7 +297,6 @@ U_MACC_CONTROL_0(
 //----------------------------------------------------------------
 //               Interrupt And Restore Generate
 //----------------------------------------------------------------
-wire both_pads_ready =  Wpad_data_ready & Fpad_data_ready;
 //wire both_pads_ready =  Wpad_data_ready;
 wire pad_full = Wpad_full|Fpad_full;
 //wire pad_full = Wpad_full;
@@ -377,13 +388,31 @@ end
 //----------------------------------------------------------------
 //            Weight and Fmap Pad Address Generate
 //----------------------------------------------------------------
+// cnt_a : inter channel cnt
+// cnt_b : outer channel cnt
+wire  [ADDRESSWIDTH_W_PAD-1:0] weight_shift_num;
+assign weight_shift_num = load_one_cloumn_num*cnt_shift;
+
 always@(posedge clk or posedge rst) begin
   if (rst) begin
     weight_addr <= 0;
     ifmap_addr <= 0;
+    base_weight_address <= 0;
   end else begin 
     if(mul_enable_flag) begin
-      weight_addr <= cnt_a + cnt_b*Para_1Dconv_len;
+      if(mode) begin
+        if(both_pads_ready) begin
+          base_weight_address <= cnt_b* weight_1channel_mode_1;
+          weight_addr <= cnt_a-weight_shift_num + Para_1Dconv_len*cnt_clip + cnt_b* weight_1channel_mode_1;
+        end else begin
+          base_weight_address <= base_weight_address;
+          weight_addr <= weight_addr;
+        end
+
+      end else begin
+        base_weight_address <= 0; 
+        weight_addr <= cnt_a + cnt_b*Para_1Dconv_len;
+      end
       if (cnt_a >= pixel_num-pixel_point) begin
         ifmap_addr <= cnt_a + pixel_point-pixel_num;
       end else begin

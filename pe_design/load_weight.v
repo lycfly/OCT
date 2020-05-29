@@ -32,7 +32,9 @@ input             [DATA_WIDTH-1:0]          weight_in,
 input                                       weight_in_en,
 input             [ADDRESSWIDTH_W_PAD-1:0]  weight_num,             //# of weight 
 input             [ADDRESSWIDTH_F_PAD-1:0]  pixel_num,              //# of pixel
-input             [ADDRESSWIDTH_W_PAD-1:0]  raddra_filter,          // input weights read address
+input             [ADDRESSWIDTH_W_PAD-1:0]  raddra_filter,          // input weights read address         
+input             [ADDRESSWIDTH_W_PAD-1:0]  base_address,          // input weights read address
+             
 output                                      fifo_full,
 output            [DATA_WIDTH-1:0]          weight_out,             // output weight port
 output                                      pad_data_ready,
@@ -159,15 +161,8 @@ always @(posedge clk or posedge rst) begin
       LOAD_FROM_FIFO: begin
           fifo_rd_en <= 0;
           wea_filter <= 1;
-          // if(cnt_i<FIFO2RAM_RATIO-1) begin   //load  weights 
-          //     wea_filter <= 1;
-          // 	cnt_i <= cnt_i + 1;
-          // 	waddra_filter <= waddra_filter + 1;
-          // 	FSM <= LOAD_FROM_FIFO;
-          // end
-          // else begin
-          // 	cnt_i <= 0;
-          	
+    
+          	 
           if(waddra_filter == weight_num -1) begin
             load_data_finish_flag <= 1;
             FSM <= INITIAL;
@@ -187,8 +182,10 @@ always @(posedge clk or posedge rst) begin
 	end
   end
 
-assign  pad_data_ready = waddra_filter > 3;
-assign  pad_full = (waddra_filter-raddra_filter<3)&(~load_data_finish_flag);
+//wire  [ADDRESSWIDTH_W_PAD-1:0] address_margin;
+//assign  address_margin = (waddra_filter - base_address);
+assign  pad_data_ready =  (waddra_filter > base_address + 3) ? 1'b1:1'b0;
+assign  pad_full = (waddra_filter-raddra_filter<3)|(~pad_data_ready)&(~load_data_finish_flag);
 
 
 endmodule

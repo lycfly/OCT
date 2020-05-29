@@ -1,0 +1,9 @@
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/True_dual_ports_ram.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/fifo.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v
+/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode1_tb/pe_mode1_tb.v

@@ -44,6 +44,7 @@ module macc_control
   input                            acc_begin,         // accumulate external psum begin signal 
   input                            interrupt,         // mul interrupt signal
   input                            restore,           // restore signal (at least 2 circle after interrupt)
+  input                            both_pads_ready,
   // Date input signals
   input      [DATA_WIDTH-1:0]      external_psum,     // external psum input 
   input      [DATA_WIDTH-1:0]      internal_psum,     // internal psum input (psum_pad[c])
@@ -154,14 +155,15 @@ end
 parameter IDLE      = 3'b000;   
 parameter MUL_RUN   = 3'b001;  // MAC start
 parameter MUL_WAIT  = 3'b011;  // MAC finish and wait for psum to be stored
-parameter MUL_END   = 3'b111;  // MAC end 
+parameter MUL_END   = 3'b010;  // MAC end 
 parameter MUL_CYC   = 3'b110;  // MAC cycle, cycle from psum_0 to psum_m (all output channels)
-parameter ACC_RUN   = 3'b100;  // Accumulate the current psum and the psum from last calculation (psum_in)
-parameter ACC_END   = 3'b101;  // Accumulate finish
+parameter MUL_NOP   = 3'b111;
+parameter ACC_RUN   = 3'b101;  // Accumulate the current psum and the psum from last calculation (psum_in)
+parameter ACC_END   = 3'b100;  // Accumulate finish
 
 reg [2:0] mac_curr_state;
 reg [2:0] mac_next_state;
-
+reg [1:0] mac_cyc_delay_cnt;
 always@(posedge clk or posedge rst) begin
     if(rst) mac_curr_state <= IDLE;
     else mac_curr_state <= mac_next_state;
@@ -178,11 +180,15 @@ always@(*) begin
     MUL_WAIT:mac_next_state = MUL_END; 
 
     MUL_END: if(restore) mac_next_state = MUL_RUN;  
-             else if(interrupt_state) mac_next_state = MUL_END; 
+             else if(interrupt_state) mac_next_state = MUL_END;  
              else                     mac_next_state = MUL_CYC;
-
-    MUL_CYC: if(b==Para_filter_num-1) mac_next_state = IDLE; 
-             else                     mac_next_state = MUL_RUN;
+             
+    MUL_CYC: if (b==Para_filter_num-1) mac_next_state = IDLE;
+             else if(mode)             mac_next_state = MUL_NOP;
+             else                      mac_next_state = MUL_RUN;
+    MUL_NOP: if(mode && mac_cyc_delay_cnt < 2) mac_next_state = MUL_NOP;
+             else if (both_pads_ready)         mac_next_state = MUL_RUN;
+             else                              mac_next_state = MUL_NOP;
     ACC_RUN: if(a==Para_filter_num-1) mac_next_state = ACC_END; 
              else                     mac_next_state = ACC_RUN;
     ACC_END: mac_next_state = IDLE; 
@@ -203,17 +209,20 @@ always @(posedge clk or posedge rst) begin
         acc_start  <= 0;
         acc_finish <= 0;
         interrupt_store <= 0;
+        mac_cyc_delay_cnt <= 0;
     end else begin
         case(mac_curr_state)
         IDLE: begin
            a <= 0;
            b <= 0;
+           mac_cyc_delay_cnt <= 0;
            {clear,gate,exter,mac_finish,mac_all_finish,
              acc_finish,interrupt_store} <= {1'b1,1'b1,1'b0,1'b0,1'b0,1'b0,1'b0};
            {mul_start,acc_start} <= {mac_begin_,1'b0};
          end
-        MUL_RUN: begin
-            if(a==Para_1Dconv_len-1 || interrupt) a <= a;
+        MUL_RUN: begin 
+            mac_cyc_delay_cnt <= 0;
+            if(a==Para_1Dconv_len-1 || (interrupt )) a <= a;
             else                     a <= a + 1;
             {clear, gate, exter}    <= {1'b0, 1'b0, 1'b0};
             {mac_finish, mul_start} <= {1'b0, 1'b1};
@@ -229,6 +238,7 @@ always @(posedge clk or posedge rst) begin
           end
         MUL_END: begin
             a <= a;
+          
             {clear, gate, exter}    <= {1'b1, 1'b1, 1'b0};
             if(interrupt_state) {mac_finish, interrupt_store} <= {1'b0, 1'b1};
             else {mac_finish, interrupt_store} <= {1'b1, 1'b0};
@@ -237,20 +247,27 @@ always @(posedge clk or posedge rst) begin
             {acc_finish, acc_start} <= {1'b0, 1'b0};
         end
         MUL_CYC: begin
-            a <= 0;
+            a <= 0;           
             if(b==Para_filter_num-1)begin
-                b <= 0;
-                {mul_start,mac_all_finish} <=  {1'b0,1'b1};
+              b <= 0;
+              {mul_start,mac_all_finish} <=  {1'b0,1'b1};
             end else begin
-                b <= b + 1;              
-                {mul_start,mac_all_finish} <=  {1'b1,1'b0};
-              end
+              b <= b + 1;              
+              {mul_start,mac_all_finish} <=  {1'b1,1'b0};
+            end
+            
             mac_finish <= 1'b0;
             {clear, gate, exter}    <= {1'b1, 1'b1, 1'b0};
             {acc_finish, acc_start} <= {1'b0, 1'b0};
             interrupt_store <= 0;
           end
-
+        MUL_NOP: begin
+            if(mode) 
+              if(mac_cyc_delay_cnt == 3) mac_cyc_delay_cnt <= 3;
+              else mac_cyc_delay_cnt <= mac_cyc_delay_cnt + 1;
+            else
+              mac_cyc_delay_cnt <= 0;
+          end
         ACC_RUN: begin
             if(a==Para_filter_num-1) a <= a;
             else                     a <= a + 1;
@@ -273,7 +290,7 @@ always @(posedge clk or posedge rst) begin
  end
 
  // generate psum initial flag, because the clips (except for the first clip) 
- // need the last mul and acc esult to initial the accumulate base value, 
+ // need the last mul and acc result to initial the accumulate base value, 
  // psum_initial_flag indicate that the internal pin of adder can be assigned
  // to the last psum value.
 reg mul_start3;
