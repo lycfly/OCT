@@ -31,3 +31,30 @@ for k in range(K):
       psum[i+k*p] += ifmap[j]*weight_value
 
 print(psum)
+
+ifmap = [x+13 for x in range (pixel_num)]
+
+for k in range(K):
+  for i in range(p):
+    for j in range(pixel_num):
+      if(j-shift_num*k+i*T+pixel_num < 0):
+        weight_value = 0
+      else:
+        weight_value = weight[j-shift_num*k+i*T+pixel_num]
+      psum[i+k*p] += ifmap[j]*weight_value
+
+print(psum)
+
+ifmap = [x+25 for x in range (pixel_num)]
+
+for k in range(K):
+  for i in range(p):
+    for j in range(pixel_num):
+      if(j-shift_num*k+i*T+pixel_num*2 < 0 or j-shift_num*k+i*T+pixel_num*2 > weight_num-1):
+        weight_value = 0
+      else:
+        weight_value = weight[j-shift_num*k+i*T+pixel_num*2]
+      psum[i+k*p] += ifmap[j]*weight_value
+
+print(psum)
+
