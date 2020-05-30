@@ -60,6 +60,8 @@ wire                              psum_acc_finish;
 wire                              psum_out_valid;
 wire                              fifo_full_fmap;
 wire                              fifo_full_filter;
+wire                              shift_finish_flg;
+
 wire   [PSUM_DATA_WIDTH-1:0]      psum_out;
 wire                              psum_out_en;
 wire   [PSUM_DATA_WIDTH-1:0]      psum_to_bus;
@@ -146,51 +148,52 @@ task transform_weight_data;
  end
 endtask
 initial begin
+   fork 
+     begin
+       fmap_bus_ready = 0;
+       #11;
+       @(posedge clk);
+       load_full_cloumn <= 1;
+       start_feature_load <= 1;
+       #2  start_feature_load <= 0;
+       // 开始传输feature
+       transform_fmap_data(1,7);
+       #40
+       transform_fmap_data(7,13);
+     end
+     
+     begin
+       weight_bus_ready = 0; 
+       #11;
+       start_weight_load <= 1;
+       #2  start_weight_load <= 0;
+
+       transform_weight_data(1,10);    
+       #60;
+       transform_weight_data(10,37);
+       transform_weight_data(37,103);
+     end
+   join
    
-   fmap_bus_ready = 0;
-   #11;
+   wait(shift_finish_flg==1);
    @(posedge clk);
    load_full_cloumn <= 1;
    start_feature_load <= 1;
    #2  start_feature_load <= 0;
-   // 开始传输feature
-   transform_fmap_data(1,7);
-   #40
-   transform_fmap_data(7,13);
+   // 开始传输第二段feature
+   transform_fmap_data(13,25);
 
-   #600 
+   wait(shift_finish_flg==1);
+   @(posedge clk);
+   load_full_cloumn <= 1;
    start_feature_load <= 1;
-   load_full_cloumn <= 0;
-   //mac_begin <= 1;
    #2  start_feature_load <= 0;
-   //mac_begin <= 0;
-   transform_fmap_data(13,15);
-   #20
-   transform_fmap_data(15,17); 
-   
+   // 开始传输第三段feature
+   transform_fmap_data(25,37);
+
  end
 
  
-initial begin
-    weight_bus_ready = 0; 
-    #11;
-    start_weight_load <= 1;
-    #2  start_weight_load <= 0;
-     
-    transform_weight_data(1,10);    
-    #60;
-    transform_weight_data(10,37);
-    transform_weight_data(37,103);
-    #320
-    start_psum_in_load <= 1;
-    #2 start_psum_in_load <= 0;
-    psum_in_en <= 1;
-    
-    #2 psum_in <= 1;
-    #2 psum_in <= psum_in + 1;
-    #2 psum_in <= psum_in + 1;
-    psum_in_en <= 0;
-  end
 
 
 pe #(  .DATA_WIDTH      ( DATA_WIDTH      ),
@@ -229,6 +232,7 @@ U_PE_0
    .psum_out_valid     ( psum_out_valid     ),
    .fifo_full_fmap     ( fifo_full_fmap     ),
    .fifo_full_filter   ( fifo_full_filter   ),
+   .shift_finish_flg   ( shift_finish_flg   ),
    .psum_out           ( psum_out           ),
    .psum_out_en        ( psum_out_en        ),
    .psum_to_bus        ( psum_to_bus        ));
@@ -238,7 +242,7 @@ initial begin
   $fsdbDumpvars();
   $fsdbDumpMDA();
   $dumpvars();
-  #1000 $finish;
+  #2000 $finish;
 end
 
 endmodule

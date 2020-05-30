@@ -185,7 +185,7 @@ always @(posedge clk or posedge rst) begin
 //wire  [ADDRESSWIDTH_W_PAD-1:0] address_margin;
 //assign  address_margin = (waddra_filter - base_address);
 assign  pad_data_ready =  (waddra_filter > base_address + 3) ? 1'b1:1'b0;
-assign  pad_full = (waddra_filter-raddra_filter<3)|(~pad_data_ready)&(~load_data_finish_flag);
+assign  pad_full = ((waddra_filter!=weight_num-1)&(raddra_filter!=0)&(waddra_filter<raddra_filter+3))&(~load_data_finish_flag);
 
-
+//assign  pad_full = ((waddra_filter!=weight_num-1)&(raddra_filter!=0)&(waddra_filter<raddra_filter+3))|(~pad_data_ready)&(~load_data_finish_flag);
 endmodule

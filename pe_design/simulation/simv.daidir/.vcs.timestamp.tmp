@@ -134,11 +134,11 @@ ADS_HOME=/opt/KeySight/ADS2015
 0
 11
 1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v
-1590750134 ../pe.v
-1590754881 ../macc_control.v
+1590821888 ../pe.v
+1590821812 ../macc_control.v
 1590676142 ../macc_2stage.v
 1590676142 ../macc.v
-1590745289 ../load_weight.v
+1590809935 ../load_weight.v
 1590676142 ../load_fmap.v
 1590676142 ../fifo.v
 1590715060 ../True_dual_ports_ram.v

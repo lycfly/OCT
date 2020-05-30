@@ -60,12 +60,14 @@ output reg                                      psum_acc_finish,
 output reg                                      psum_out_valid,
 output wire                                     fifo_full_fmap,
 output wire                                     fifo_full_filter,
+output wire                                     shift_finish_flg,
 // output data 
 output reg        [PSUM_DATA_WIDTH-1:0]         psum_out,
 input                                           psum_out_start,            //bus read start
 output reg                                      psum_out_en,            //bus read enable
 output reg        [PSUM_DATA_WIDTH-1:0]         psum_to_bus
 );
+
 
 parameter ADDRESSWIDTH_W_PAD = $clog2(W_PAD_SIZE);
 parameter ADDRESSWIDTH_F_PAD = $clog2(IF_PAD_SIZE);
@@ -180,11 +182,15 @@ wire        [DATA_WIDTH-1:0]           weight_out;
 wire                                   Wpad_data_ready;
 wire                                   Wpad_full;
 
-assign weight_addr_true = weight_addr[ADDRESSWIDTH_W_PAD] ?  0 : weight_addr[ADDRESSWIDTH_W_PAD-1:0];
+assign weight_addr_true = weight_addr[ADDRESSWIDTH_W_PAD] ?  0 : ((weight_addr> weight_num-1) ? weight_num-1 : weight_addr[ADDRESSWIDTH_W_PAD-1:0]);
 
 assign zero_output_flg = (weight_addr<0 || weight_addr> (weight_num-1)) ? 1'b1:1'b0;
+reg zero_output_flg_delay;
 
-assign weight_out = zero_output_flg? 0:weight_out_from_pad;
+always @(posedge clk) zero_output_flg_delay <= zero_output_flg;
+    
+
+assign weight_out = zero_output_flg_delay ? 0:weight_out_from_pad;
 
 load_weight #( 
   .DATA_WIDTH ( DATA_WIDTH ),
@@ -236,6 +242,7 @@ wire                       mul_enable_flag;   // conv begin flag , to control th
 wire                       psum_initial_flag;
 wire                       acc_enable_flag;   // accumulate start flag
 wire                       psum_store_flag;   // psum store begin flag (both conv and acc) 
+wire                       shift_finish_flag;
 wire [1:0]                 accumulate_mode;
 //output cnt signals
 wire [IFPAD_WIDTH-1:0]     cnt_a;  // 1-D conv cnt
@@ -250,6 +257,8 @@ assign mac_weight_in = weight_out;
 
 always @(posedge clk) psum_acc_finish = acc_finish_flag;
 wire both_pads_ready =  Wpad_data_ready & Fpad_data_ready;
+
+assign shift_finish_flg = shift_finish_flag;   //assign to pe output 
 
 macc_control #(
     .DATA_WIDTH                     ( DATA_WIDTH        ),
@@ -286,6 +295,7 @@ U_MACC_CONTROL_0(
     .psum_initial_flag              ( psum_initial_flag  ),
     .acc_enable_flag                ( acc_enable_flag    ),
     .psum_store_flag                ( psum_store_flag    ),
+    .shift_finish_flag              ( shift_finish_flag  ),
     .accumulate_mode                ( accumulate_mode    ),
     .cnt_a                          ( cnt_a              ),
     .cnt_b                          ( cnt_b              ),
@@ -393,19 +403,31 @@ end
 wire  [ADDRESSWIDTH_W_PAD-1:0] weight_shift_num;
 assign weight_shift_num = load_one_cloumn_num*cnt_shift;
 
+always @(posedge clk or posedge rst) begin
+  if(rst) begin
+    base_weight_address <= 0; 
+  end else begin
+    if(mode & both_pads_ready & mac_finish_flag) 
+      base_weight_address <= cnt_b* weight_1channel_mode_1;
+    else 
+      base_weight_address <= base_weight_address;
+  end
+end
+
 always@(posedge clk or posedge rst) begin
   if (rst) begin
     weight_addr <= 0;
     ifmap_addr <= 0;
-    base_weight_address <= 0;
+    //base_weight_address <= 0;
   end else begin 
     if(mul_enable_flag) begin
       if(mode) begin
         if(both_pads_ready) begin
-          base_weight_address <= cnt_b* weight_1channel_mode_1;
+         // if(mac_finish_flag)
+            //base_weight_address <= cnt_b* weight_1channel_mode_1;
           weight_addr <= cnt_a-weight_shift_num + Para_1Dconv_len*cnt_clip + cnt_b* weight_1channel_mode_1;
         end else begin
-          base_weight_address <= base_weight_address;
+          //base_weight_address <= base_weight_address;
           weight_addr <= weight_addr;
         end
 

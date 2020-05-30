@@ -236,7 +236,7 @@ always @(posedge clk or posedge rst) begin
       end
     end
 wire [ADDRESSWIDTH_F_PAD-1:0] addr_gap = waddra_ifmap-raddra_ifmap;
-wire addr_closed = addr_gap<3;    
+wire addr_closed = (addr_gap<3) & (raddra_ifmap!=0);    
 assign pixel_point = load_full_cloumn_flg?0:pixel_point_;
 
 assign  pad_data_ready = load_full_cloumn_flg?(waddra_ifmap > 3):1;

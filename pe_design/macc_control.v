@@ -59,6 +59,7 @@ module macc_control
   output reg                       psum_initial_flag, // initial the acc start value with the last psum
   output wire                      acc_enable_flag,   // accumulate start flag
   output wire                      psum_store_flag,   // psum store begin flag (both conv and acc) 
+  output wire                      shift_finish_flag,
   output wire [1:0]                accumulate_mode,   // to control the input of adder pinA and pinB at different mode
 
   //output cnt signals
@@ -163,7 +164,7 @@ parameter ACC_END   = 3'b100;  // Accumulate finish
 
 reg [2:0] mac_curr_state;
 reg [2:0] mac_next_state;
-reg [1:0] mac_cyc_delay_cnt;
+reg [2:0] mac_cyc_delay_cnt;
 always@(posedge clk or posedge rst) begin
     if(rst) mac_curr_state <= IDLE;
     else mac_curr_state <= mac_next_state;
@@ -186,7 +187,7 @@ always@(*) begin
     MUL_CYC: if (b==Para_filter_num-1) mac_next_state = IDLE;
              else if(mode)             mac_next_state = MUL_NOP;
              else                      mac_next_state = MUL_RUN;
-    MUL_NOP: if(mode && mac_cyc_delay_cnt < 2) mac_next_state = MUL_NOP;
+    MUL_NOP: if(mode && mac_cyc_delay_cnt < 1) mac_next_state = MUL_NOP;
              else if (both_pads_ready)         mac_next_state = MUL_RUN;
              else                              mac_next_state = MUL_NOP;
     ACC_RUN: if(a==Para_filter_num-1) mac_next_state = ACC_END; 
@@ -252,8 +253,9 @@ always @(posedge clk or posedge rst) begin
               b <= 0;
               {mul_start,mac_all_finish} <=  {1'b0,1'b1};
             end else begin
-              b <= b + 1;              
-              {mul_start,mac_all_finish} <=  {1'b1,1'b0};
+              b <= b + 1; 
+              if(mode) {mul_start,mac_all_finish} <=  {1'b0,1'b0};
+              else  {mul_start,mac_all_finish} <=  {1'b1,1'b0};
             end
             
             mac_finish <= 1'b0;
@@ -263,8 +265,13 @@ always @(posedge clk or posedge rst) begin
           end
         MUL_NOP: begin
             if(mode) 
-              if(mac_cyc_delay_cnt == 3) mac_cyc_delay_cnt <= 3;
-              else mac_cyc_delay_cnt <= mac_cyc_delay_cnt + 1;
+              if(mac_cyc_delay_cnt == 1) begin
+                mac_cyc_delay_cnt <= mac_cyc_delay_cnt;
+                {mul_start,mac_all_finish} <=  {1'b1,1'b0};
+              end else begin
+                mac_cyc_delay_cnt <= mac_cyc_delay_cnt + 1;
+                {mul_start,mac_all_finish} <=  {1'b0,1'b0};
+              end
             else
               mac_cyc_delay_cnt <= 0;
           end
@@ -347,6 +354,7 @@ assign cnt_clip = clip_num_cnt;
 reg shift_mac_finish; // finish signal of every shift 1-D conv 
 reg shift_mac_finish_all; // finish signal of all clips(the whole line) 1-D conv
 
+assign shift_finish_flag = shift_mac_finish;
 
  always@(posedge clk or posedge rst) begin
     if (rst) begin

@@ -73,7 +73,7 @@ SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3257,unix/unix:/tmp/.ICE-unix/3257
 SCRNAME=vcs
 SCRIPT_NAME=vcs
 SCL_HOME=/opt/Synopsys/SCL11.11
-ROWS=39
+ROWS=46
 RC_HOME=/opt/Cadence/RC11
 QT_IM_MODULE=ibus
 QTLIB=/usr/lib64/qt-3.3/lib
@@ -129,13 +129,13 @@ ADS_HOME=/opt/KeySight/ADS2015
 11
 1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v
 1590715060 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/True_dual_ports_ram.v
-1590750134 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v
-1590756097 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v
+1590839579 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v
+1590827783 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v
 1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc.v
-1590745289 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v
-1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v
+1590840073 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v
+1590839585 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v
 1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/fifo.v
-1590741905 ../pe_mode1_tb.v
+1590825995 ../pe_mode1_tb.v
 1453442056 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/novas.tab
 1393560725 /opt/Synopsys/VCS2014/amd64/lib/vcsdp.tab
 5

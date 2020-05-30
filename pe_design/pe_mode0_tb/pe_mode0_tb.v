@@ -40,6 +40,7 @@ reg        [PARA_WIDTH-1:0] q;
 reg        [PARA_WIDTH-1:0] p;
 reg        [PARA_WIDTH-1:0] j;
 reg        [PARA_WIDTH-1:0] k;
+reg        [PARA_WIDTH-1:0] T;
 reg                         start_config;
 reg                         start_weight_load;
 reg                         start_feature_load;
@@ -59,9 +60,11 @@ wire                              psum_acc_finish;
 wire                              psum_out_valid;
 wire                              fifo_full_fmap;
 wire                              fifo_full_filter;
-wire signed [PSUM_DATA_WIDTH-1:0] psum_out;
+wire                              shift_finish_flg;
+
+wire   [PSUM_DATA_WIDTH-1:0]      psum_out;
 wire                              psum_out_en;
-wire signed [PSUM_DATA_WIDTH-1:0] psum_to_bus;
+wire   [PSUM_DATA_WIDTH-1:0]      psum_to_bus;
 
 
 always #1 clk = ~clk;
@@ -73,6 +76,8 @@ initial begin
   p = 3;
   j = 2;
   k = 2;
+  T = 34;
+  
   start_config = 0;
   start_weight_load = 0;
   start_feature_load = 0;
@@ -208,6 +213,7 @@ U_PE_0
    .p                  ( p                  ),
    .j                  ( j                  ),
    .k                  ( k                  ),
+   .T                  ( T                  ),   
    .start_config       ( start_config       ),
    .start_weight_load  ( start_weight_load  ),
    .start_feature_load ( start_feature_load ),
@@ -226,6 +232,7 @@ U_PE_0
    .psum_out_valid     ( psum_out_valid     ),
    .fifo_full_fmap     ( fifo_full_fmap     ),
    .fifo_full_filter   ( fifo_full_filter   ),
+   .shift_finish_flg   ( shift_finish_flg   ),
    .psum_out           ( psum_out           ),
    .psum_out_en        ( psum_out_en        ),
    .psum_to_bus        ( psum_to_bus        ));
