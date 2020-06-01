@@ -159,7 +159,7 @@ HISTCONTROL=ignoredups
 SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
 Encounter_HOME=/opt/Cadence/INNOVUS15
 VCS_ARG_ADDED_FOR_TMP=1
-SNPS_VCS_TMPDIR=/tmp/vcs_20200530120200_103458
+SNPS_VCS_TMPDIR=/tmp/vcs_20200601093134_109396
 SHLVL=4
 HOME=/home/IC
 MGC_HOME=/opt/Mentor/Calibre2015/ixl_cal_2015.4_16.11
@@ -203,9 +203,9 @@ argv[4]=+define+
 argv[5]=+nospecify
 argv[6]=+notimingcheck
 204 profile - 100
-          CPU/Mem usage: 0.020 sys,  0.190 user,  150.70M sys,  0.00M vm
+          CPU/Mem usage: 0.010 sys,  0.150 user,  150.71M sys,  0.00M vm
 205 VC callback profile - scalar:0 vector:0
-206 Sat May 30 20:02:02 2020
+206 Mon Jun  1 17:31:36 2020
 207 pliAppInit
 208 *Verdi3* : Enable Parallel Dumping.
 209 [MHPI_DL_ERROR]simv: undefined symbol: mhpi_skipFileReset
@@ -221,61 +221,61 @@ argv[6]=+notimingcheck
 219 *Verdi3* : Begin traversing the scopes, layer (0).
 220 *Verdi3* : End of traversing.
 221 fsdbDumpvars traverse var: profile - 
-          CPU/Mem usage: 0.020 sys,  0.200 user,  295.83M sys,  0.00M vm
-                   incr: 0.000 sys,  0.010 user,  3.25M sys,  0.00M vm
-                   accu: 0.000 sys,  0.010 user,  3.25M sys,  0.00M vm
-              accu incr: 0.000 sys,  0.010 user,  3.25M sys,  0.00M vm
+          CPU/Mem usage: 0.010 sys,  0.150 user,  295.83M sys,  0.00M vm
+                   incr: 0.000 sys,  0.000 user,  3.25M sys,  0.00M vm
+                   accu: 0.000 sys,  0.000 user,  3.25M sys,  0.00M vm
+              accu incr: 0.000 sys,  0.000 user,  3.25M sys,  0.00M vm
 
-          Count usage: 320 var,  257 idcode,  257 callback
-                 incr: 320 var,  257 idcode,  257 callback
-                 accu: 320 var,  257 idcode,  257 callback
-            accu incr: 320 var,  257 idcode,  257 callback
+          Count usage: 322 var,  259 idcode,  259 callback
+                 incr: 322 var,  259 idcode,  259 callback
+                 accu: 322 var,  259 idcode,  259 callback
+            accu incr: 322 var,  259 idcode,  259 callback
 222 VC callback profile - scalar:0 vector:0
-223 Sat May 30 20:02:02 2020
+223 Mon Jun  1 17:31:36 2020
 224 fsdbDumpvars: profile - 
-          CPU/Mem usage: 0.020 sys,  0.200 user,  296.88M sys,  0.00M vm
+          CPU/Mem usage: 0.010 sys,  0.150 user,  296.88M sys,  0.00M vm
                    incr: 0.000 sys,  0.000 user,  1.05M sys,  0.00M vm
-                   accu: 0.000 sys,  0.010 user,  4.30M sys,  0.00M vm
+                   accu: 0.000 sys,  0.000 user,  4.30M sys,  0.00M vm
               accu incr: 0.000 sys,  0.000 user,  1.05M sys,  0.00M vm
 
-          Count usage: 320 var,  257 idcode,  257 callback
+          Count usage: 322 var,  259 idcode,  259 callback
                  incr: 0 var,  0 idcode,  0 callback
-                 accu: 320 var,  257 idcode,  257 callback
+                 accu: 322 var,  259 idcode,  259 callback
             accu incr: 0 var,  0 idcode,  0 callback
-225 VC callback profile - scalar:177 vector:143
-226 Sat May 30 20:02:02 2020
+225 VC callback profile - scalar:178 vector:144
+226 Mon Jun  1 17:31:36 2020
 227 sps_call_fsdbDumpMDA at 0 : ../pe_mode1_tb.v(243)
 228 *Verdi3* : Begin traversing the MDAs, layer (0).
 229 *Verdi3* : Enable +mda and +packedmda dumping.
 230 *Verdi3* : End of traversing the MDAs.
 231 fsdbDumpMDA traverse var: profile - 
-          CPU/Mem usage: 0.030 sys,  0.210 user,  297.03M sys,  0.00M vm
-                   incr: 0.010 sys,  0.010 user,  0.15M sys,  0.00M vm
-                   accu: 0.010 sys,  0.010 user,  0.15M sys,  0.00M vm
-              accu incr: 0.010 sys,  0.010 user,  0.15M sys,  0.00M vm
+          CPU/Mem usage: 0.010 sys,  0.160 user,  297.03M sys,  0.00M vm
+                   incr: 0.000 sys,  0.010 user,  0.15M sys,  0.00M vm
+                   accu: 0.000 sys,  0.010 user,  0.15M sys,  0.00M vm
+              accu incr: 0.000 sys,  0.010 user,  0.15M sys,  0.00M vm
 
-          Count usage: 712 var,  649 idcode,  262 callback
-                 incr: 392 var,  392 idcode,  5 callback
-                 accu: 392 var,  392 idcode,  5 callback
-            accu incr: 392 var,  392 idcode,  5 callback
-232 VC callback profile - scalar:177 vector:143
-233 Sat May 30 20:02:02 2020
+          Count usage: 490 var,  427 idcode,  264 callback
+                 incr: 168 var,  168 idcode,  5 callback
+                 accu: 168 var,  168 idcode,  5 callback
+            accu incr: 168 var,  168 idcode,  5 callback
+232 VC callback profile - scalar:178 vector:144
+233 Mon Jun  1 17:31:36 2020
 234 fsdbDumpMDA: profile - 
-          CPU/Mem usage: 0.030 sys,  0.210 user,  297.03M sys,  0.00M vm
+          CPU/Mem usage: 0.010 sys,  0.160 user,  297.03M sys,  0.00M vm
                    incr: 0.000 sys,  0.000 user,  0.00M sys,  0.00M vm
-                   accu: 0.010 sys,  0.010 user,  0.15M sys,  0.00M vm
+                   accu: 0.000 sys,  0.010 user,  0.15M sys,  0.00M vm
               accu incr: 0.000 sys,  0.000 user,  0.00M sys,  0.00M vm
 
-          Count usage: 712 var,  649 idcode,  262 callback
+          Count usage: 490 var,  427 idcode,  264 callback
                  incr: 0 var,  0 idcode,  0 callback
-                 accu: 392 var,  392 idcode,  5 callback
+                 accu: 168 var,  168 idcode,  5 callback
             accu incr: 0 var,  0 idcode,  0 callback
-235 VC callback profile - scalar:177 vector:535
-236 Sat May 30 20:02:02 2020
+235 VC callback profile - scalar:178 vector:312
+236 Mon Jun  1 17:31:36 2020
 237 End of simulation at 2000000
-238 VC callback profile - scalar:8919 vector:13521
-239 Sat May 30 20:02:02 2020
+238 VC callback profile - scalar:8922 vector:13302
+239 Mon Jun  1 17:31:36 2020
 240 Parallel profile    -  Flush:3 ProduceWait:0 ConsumerWait:0 BlockUsed:0
-241                        ProduceTime:0.271908888 ConsumerTime:0.000000000
+241                        ProduceTime:0.196287178 ConsumerTime:0.000000000
 242 SimExit
 243 Sim process exit

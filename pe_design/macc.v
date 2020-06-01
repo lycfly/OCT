@@ -8,18 +8,20 @@ module macc  # (
                 input clk, gate, exter, clear,
                 input signed  [SIZEIN-1:0]  a, b,
                 input signed  [SIZEIN-1:0]  external_psum,
-                input signed  [SIZEIN-1:0]  internal_psum,
+                input signed  [SIZEOUT-1:0]  internal_psum,
                 output reg signed [SIZEOUT-1:0] accum_out
                );
 
 reg signed [2*SIZEIN-1:0] mult_result;
-reg signed [2*SIZEIN-1:0] PinA, PinB;
+reg signed [SIZEOUT-1:0] PinA, PinB;
+
+
 always@(*) begin
     if (gate)  
 // Multiplier
         mult_result = 0;
     else 
-        mult_result = a*b ;
+        mult_result = a * b ;
 
 
 //clear psum
@@ -28,7 +30,7 @@ always@(*) begin
 // Adder 
     accum_out = PinA + PinB; 
  
-end
+  end
 
 always@(posedge clk) begin
 

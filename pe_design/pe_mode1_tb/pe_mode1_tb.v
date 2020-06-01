@@ -27,9 +27,9 @@ parameter DATA_WIDTH      = 16;
 parameter PSUM_DATA_WIDTH = 48;
 parameter ADDR_WIDTH      = 8;
 parameter PARA_WIDTH      = 8;
-parameter W_PAD_SIZE      = 200;
-parameter IF_PAD_SIZE     = 36;
-parameter PSUM_PAD_SIZE   = 36;
+parameter W_PAD_SIZE      = 102;
+parameter IF_PAD_SIZE     = 12;
+parameter PSUM_PAD_SIZE   = 9;
 parameter PE_FIFO_SIZE    = 2;
 
 reg                         clk;

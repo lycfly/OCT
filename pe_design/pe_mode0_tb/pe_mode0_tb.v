@@ -27,9 +27,9 @@ parameter DATA_WIDTH      = 16;
 parameter PSUM_DATA_WIDTH = 48;
 parameter ADDR_WIDTH      = 8;
 parameter PARA_WIDTH      = 8;
-parameter W_PAD_SIZE      = 200;
-parameter IF_PAD_SIZE     = 36;
-parameter PSUM_PAD_SIZE   = 36;
+parameter W_PAD_SIZE      = 36;  // for test
+parameter IF_PAD_SIZE     = 12; // for test
+parameter PSUM_PAD_SIZE   = 3; // for test
 parameter PE_FIFO_SIZE    = 2;
 
 reg                         clk;
@@ -164,7 +164,7 @@ initial begin
       transform_fmap_data(7,13);
       
       // test load one column feature function
-      #600 
+      #150 
       start_feature_load <= 1;
       load_full_cloumn <= 0;
       //mac_begin <= 1;
@@ -181,11 +181,11 @@ initial begin
       #2  start_weight_load <= 0;
 
       transform_weight_data(1,10);    
-      #60;
+      #20;
       transform_weight_data(10,37);
       
       // test psum accumulate function
-      #320
+      #60
       start_psum_in_load <= 1;
       #2 start_psum_in_load <= 0;
       psum_in_en <= 1;

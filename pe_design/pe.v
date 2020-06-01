@@ -236,7 +236,7 @@ wire                           interrupt;
 wire                           restore;
 // Date input signals
 reg      [DATA_WIDTH-1:0]      external_psum; // external psum input 
-reg      [DATA_WIDTH-1:0]      internal_psum; // internal psum input (psum_pad[c])
+reg      [OUT_DATA_WIDTH-1:0]  internal_psum; // internal psum input (psum_pad[c])
 wire     [DATA_WIDTH-1:0]      mac_fmap_in;
 wire     [DATA_WIDTH-1:0]      mac_weight_in;
 

@@ -83,7 +83,7 @@ assign mac_begin_ = mac_begin | shift_begin; // shift_begin only valid when mode
 reg [DATA_WIDTH-1:0] ma;   // Multiplier input pin
 reg [DATA_WIDTH-1:0] mb;   // Multiplier input pin
 reg [DATA_WIDTH-1:0] external_psum_mac; // external psum input pin
-reg [DATA_WIDTH-1:0] internal_psum_mac; // internal psum input pin
+reg [OUT_DATA_WIDTH-1:0] internal_psum_mac; // internal psum input pin
 
 reg [IFPAD_WIDTH-1:0]a;    // 1-D conv cnt
 reg [OFPAD_WIDTH-1:0]b;    // output channel cnt
