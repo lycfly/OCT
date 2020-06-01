@@ -44,6 +44,8 @@ input                                           start_config,             //star
 input                                           start_weight_load,        //start weight  load
 input                                           start_feature_load,       //start feature load
 input                                           start_psum_in_load,       //start psum_in load
+input                                           start_psum_out,            //bus read start
+
 input                                           load_full_cloumn,         //0: pop_one_column_feature and push a new column 1: store columns until full
 input                                           mode,                     // 1: clip and shift conv mode; 0: normal 1-D conv
 /* input data bus */
@@ -62,13 +64,12 @@ output wire                                     fifo_full_fmap,
 output wire                                     fifo_full_filter,
 output wire                                     shift_finish_flg,
 // output data 
-output reg        [PSUM_DATA_WIDTH-1:0]         psum_out,
-input                                           psum_out_start,            //bus read start
-output reg                                      psum_out_en,            //bus read enable
-output reg        [PSUM_DATA_WIDTH-1:0]         psum_to_bus
+output reg        [DATA_WIDTH-1:0]              psum_out,
+output reg                                      psum_out_en,            //bus read enable  
+output reg        [DATA_WIDTH-1:0]              psum_to_bus
 );
 
-
+ 
 parameter ADDRESSWIDTH_W_PAD = $clog2(W_PAD_SIZE);
 parameter ADDRESSWIDTH_F_PAD = $clog2(IF_PAD_SIZE);
 parameter ADDRESSWIDTH_P_PAD = $clog2(PSUM_PAD_SIZE);
@@ -89,6 +90,7 @@ wire     [IFPAD_WIDTH-1:0]     Para_1Dconv_len;   // 1-D conv length
 reg      [OFPAD_WIDTH-1:0]     Para_filter_num;   // conv filter number
 reg     [MAX_CLIP_WIDTH-1:0]  Para_clip_num_max; // the max number of clip (0~19)
 reg     [MAX_SHIFT_WIDTH-1:0] Para_shift_num_max;// the max number of shift (0~9)
+reg  [ADDRESSWIDTH_P_PAD-1:0] psum_num;
 
 reg  [ADDRESSWIDTH_F_PAD-1:0]  load_one_cloumn_num;
 
@@ -112,12 +114,16 @@ always @(posedge clk) begin
     Para_clip_num_max <= 0;
     Para_shift_num_max <= 0;
     weight_1channel_mode_1 <= 0;
+    psum_num <= 0;
   end
   else if (start_config) begin
-    if(mode)
+    if(mode) begin
       weight_num <= T*p;
-    else
+      psum_num <= p*k;
+    end else begin
       weight_num <= Sqp;
+      psum_num <= p;
+    end
     pixel_num  <= Sq;
     load_one_cloumn_num <= Uq;
     Para_filter_num <= p;
@@ -361,7 +367,7 @@ assign acc_begin = start_psum_in_load;
 //----------------------------------------------------------------
 //                           Psum Pad
 //----------------------------------------------------------------
-reg [DATA_WIDTH-1: 0] psum_pad[(1<<ADDRESSWIDTH_P_PAD)-1:0] ;
+reg [OUT_DATA_WIDTH-1: 0] psum_pad[(1<<ADDRESSWIDTH_P_PAD)-1:0] ;
 
 //--------------------------------------------------------------------------
 // determine the value of internal pin of adder accroding to accumulate mode
@@ -479,20 +485,30 @@ reg   [ADDRESSWIDTH_P_PAD-1:0]  psum_read_address;
 reg psum_out_ready;
 wire psum_transform_start;
 wire psum_transform_finish;
-assign psum_transform_finish = (psum_read_address==p);
-assign psum_transform_start = psum_out_ready&psum_out_start;
+assign psum_transform_finish = (psum_read_address==psum_num);
+assign psum_transform_start = psum_out_ready&start_psum_out;
+reg psum_transforming;
+always @(posedge clk or posedge rst) begin
+  if (rst) begin
+    psum_transforming <= 0;
+  end else begin
+    if(psum_transform_start) psum_transforming <= 1;
+    else if (psum_transform_finish) psum_transforming <= 0;
+    else psum_transforming <= psum_transforming;
+  end
+end
 
 always @(posedge clk or posedge rst) begin
 	if (rst) begin
 		// reset
 		psum_out_ready <= 0;
       end
-	else if (acc_finish_flag) begin
+	else if (psum_acc_finish) begin
 		psum_out_ready <= 1;
 	end else if (psum_transform_finish) begin
 		psum_out_ready <= 0;
 	end else begin
-		psum_out_ready <= psum_out_ready;
+		psum_out_ready <=  psum_out_ready;
       end
     end
 
@@ -501,8 +517,8 @@ always @(posedge clk or posedge rst) begin
 		// reset
 		psum_read_address <= 0;
 		psum_out_en <= 0;
-	end
-	else if (psum_transform_start&&(!psum_transform_finish)) begin
+      end
+	else if (~psum_transform_finish&psum_transforming) begin
 	    psum_read_address <= psum_read_address + 1;
         psum_to_bus = psum_pad[psum_read_address];
 	    psum_out_en <= 1;

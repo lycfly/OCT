@@ -45,6 +45,8 @@ reg                         start_config;
 reg                         start_weight_load;
 reg                         start_feature_load;
 reg                         start_psum_in_load;
+reg                         start_psum_out;
+
 reg                         load_full_cloumn;
 reg                         mode;
 reg        [DATA_WIDTH-1:0] psum_in;
@@ -53,7 +55,6 @@ reg        [DATA_WIDTH-1:0] feature_in;
 reg                         feature_in_en;
 reg        [DATA_WIDTH-1:0] weight_in;
 reg                         weight_in_en;
-reg                         psum_out_start;
 
 wire                              mac_finish;
 wire                              psum_acc_finish;
@@ -89,7 +90,7 @@ initial begin
   weight_in = 0;
   weight_in_en = 0;
   psum_in = 0;
-  psum_out_start = 0;
+  start_psum_out = 0;
   rst = 0;
   #4 rst = 1; #2 rst = 0;
   @(posedge clk) start_config = 1;
@@ -149,51 +150,61 @@ task transform_weight_data;
  end
 endtask
 initial begin
-   
-   fmap_bus_ready = 0;
-   #11;
-   @(posedge clk);
-   load_full_cloumn <= 1;
-   start_feature_load <= 1;
-   #2  start_feature_load <= 0;
-   // 开始传输feature
-   transform_fmap_data(1,7);
-   #40
-   transform_fmap_data(7,13);
+  fork 
+    begin
+      fmap_bus_ready = 0;
+      #11;
+      @(posedge clk);
+      load_full_cloumn <= 1;
+      start_feature_load <= 1;
+      #2  start_feature_load <= 0;
+      // 开始传输feature
+      transform_fmap_data(1,7);
+      #40
+      transform_fmap_data(7,13);
+      
+      // test load one column feature function
+      #600 
+      start_feature_load <= 1;
+      load_full_cloumn <= 0;
+      //mac_begin <= 1;
+      #2  start_feature_load <= 0;
+      //mac_begin <= 0;
+      transform_fmap_data(13,15);
+      #20
+      transform_fmap_data(15,17); 
+    end
+    begin
+      weight_bus_ready = 0; 
+      #11;
+      start_weight_load <= 1;
+      #2  start_weight_load <= 0;
 
-   #600 
-   start_feature_load <= 1;
-   load_full_cloumn <= 0;
-   //mac_begin <= 1;
-   #2  start_feature_load <= 0;
-   //mac_begin <= 0;
-   transform_fmap_data(13,15);
-   #20
-   transform_fmap_data(15,17); 
-   
+      transform_weight_data(1,10);    
+      #60;
+      transform_weight_data(10,37);
+      
+      // test psum accumulate function
+      #320
+      start_psum_in_load <= 1;
+      #2 start_psum_in_load <= 0;
+      psum_in_en <= 1;
+
+      #2 psum_in <= 1;
+      #2 psum_in <= psum_in + 1;
+      #2 psum_in <= psum_in + 1;
+      psum_in_en <= 0;
+    end
+  join
+  # 200; 
+  @(posedge clk);
+  start_psum_out <= 1;
+  #2 start_psum_out <= 0;
+
  end
 
  
-initial begin
-    weight_bus_ready = 0; 
-    #11;
-    start_weight_load <= 1;
-    #2  start_weight_load <= 0;
-     
-    transform_weight_data(1,10);    
-    #60;
-    transform_weight_data(10,37);
-    
-    #320
-    start_psum_in_load <= 1;
-    #2 start_psum_in_load <= 0;
-    psum_in_en <= 1;
-    
-    #2 psum_in <= 1;
-    #2 psum_in <= psum_in + 1;
-    #2 psum_in <= psum_in + 1;
-    psum_in_en <= 0;
-  end
+
 
 
 pe #(  .DATA_WIDTH      ( DATA_WIDTH      ),
@@ -226,7 +237,7 @@ U_PE_0
    .weight_in          ( weight_in          ),
    .weight_in_en       ( weight_in_en       ),
    .psum_in            ( psum_in            ),
-   .psum_out_start     ( psum_out_start     ),
+   .start_psum_out     ( start_psum_out     ),
    .mac_finish         ( mac_finish         ),
    .psum_acc_finish    ( psum_acc_finish    ),
    .psum_out_valid     ( psum_out_valid     ),

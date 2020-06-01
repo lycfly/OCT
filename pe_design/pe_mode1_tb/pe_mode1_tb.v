@@ -53,7 +53,7 @@ reg        [DATA_WIDTH-1:0] feature_in;
 reg                         feature_in_en;
 reg        [DATA_WIDTH-1:0] weight_in;
 reg                         weight_in_en;
-reg                         psum_out_start;
+reg                         start_psum_out;
 
 wire                              mac_finish;
 wire                              psum_acc_finish;
@@ -88,7 +88,7 @@ initial begin
   weight_in = 0;
   weight_in_en = 0;
   psum_in = 0;
-  psum_out_start = 0;
+  start_psum_out = 0;
   rst = 0;
   #4 rst = 1; #2 rst = 0;
   @(posedge clk) start_config = 1;
@@ -226,7 +226,7 @@ U_PE_0
    .weight_in          ( weight_in          ),
    .weight_in_en       ( weight_in_en       ),
    .psum_in            ( psum_in            ),
-   .psum_out_start     ( psum_out_start     ),
+   .start_psum_out     ( start_psum_out     ),
    .mac_finish         ( mac_finish         ),
    .psum_acc_finish    ( psum_acc_finish    ),
    .psum_out_valid     ( psum_out_valid     ),
