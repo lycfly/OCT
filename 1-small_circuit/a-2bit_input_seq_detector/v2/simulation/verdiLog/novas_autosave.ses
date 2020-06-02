@@ -1,0 +1,68 @@
+@verdi rc file Version 1.0
+[General]
+VerdiVersion = Verdi3_K-2015.09-SP1-1
+[KeyNote]
+Line1 = Automatic Backup 0
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+[hb]
+postSimFile = /home/IC/Desktop/0-onchiptrain/OCT/OCT/1-small_circuit/a-2bit_input_seq_detector/v2/simulation/novas.fsdb
+syncTime = 0
+viewport = 0 25 1920 1004 629 408 228 898
+activeNode = "two_bit_input_seq_detector_v2_tb.U_TWO_BIT_INPUT_SEQ_DETECTOR_V2_0"
+activeScope = "two_bit_input_seq_detector_v2_tb.U_TWO_BIT_INPUT_SEQ_DETECTOR_V2_0"
+activeFile = "../two_bit_input_seq_detector_v2.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 19
+baMode = False
+srcLineNum = True
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = False
+Scope1 = "two_bit_input_seq_detector_v2_tb.U_TWO_BIT_INPUT_SEQ_DETECTOR_V2_0"
+Scope2 = "two_bit_input_seq_detector_v2_tb"
+multipleSelection = 1 28 8 0 0
+sdfCheckUndef = FALSE
+[hb.sourceTab.1]
+scope = two_bit_input_seq_detector_v2_tb.U_TWO_BIT_INPUT_SEQ_DETECTOR_V2_0
+File = /home/IC/Desktop/0-onchiptrain/OCT/OCT/1-small_circuit/a-2bit_input_seq_detector/v2/two_bit_input_seq_detector_v2.v
+Line = 20
+[imp.design1]
+dbEnum =  oh
+invokeDir = /home/IC/Desktop/0-onchiptrain/OCT/OCT/1-small_circuit/a-2bit_input_seq_detector/v2/simulation
+design = DebussyLib
+hostCommand = hostCommand -sv ../two_bit_input_seq_detector_v2.v ../two_bit_input_seq_detector_v2_tb.v
+[nMemoryManager]
+FsdbFile = /home/IC/Desktop/0-onchiptrain/OCT/OCT/1-small_circuit/a-2bit_input_seq_detector/v2/simulation/novas.fsdb
+UserActionNum = 0
+nMemWindowNum = 0
+[wave.0]
+viewPort = 0 28 1920 408 184 55
+SessionFile = /home/IC/Desktop/0-onchiptrain/OCT/OCT/1-small_circuit/a-2bit_input_seq_detector/v2/simulation/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSync = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE

@@ -2851,3 +2851,18 @@ srcDeselectAll -win $_nTrace1
 srcDeselectAll -win $_nTrace1
 wvScrollDown -win $_nWave3 0
 wvScrollDown -win $_nWave3 0
+wvScrollDown -win $_nWave3 0
+wvZoomOut -win $_nWave3
+wvZoomOut -win $_nWave3
+wvZoomOut -win $_nWave3
+wvZoomOut -win $_nWave3
+wvSaveSignal -win $_nWave3 \
+           "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode0_tb/simulation/6_1.rc"
+debSaveSession \
+           /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode0_tb/simulation/6-1.ses \
+           -keynote \
+           {invoke directory: /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode0_tb/simulation
+command line: -sv ../pe_mode0_tb.v -ba 
+current trace scope: pe_mode0_tb.U_PE_0
+memo:}
+debExit

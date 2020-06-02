@@ -1,2 +1,3 @@
 Command Line: /opt/Synopsys/Verdi2015/platform/LINUXAMD64/bin/Novas -sv -nologo ../pe_mode0_tb.v -ssf ./novas.fsdb
 uname(Linux IC 2.6.32-573.el6.x86_64 #1 SMP Wed Jul 1 18:23:37 EDT 2015 x86_64)
+au time 192781.876311 1768.929081 6128.212371 delta 307032064 307032064 total 682184704 682184704
