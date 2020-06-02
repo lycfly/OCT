@@ -60,6 +60,7 @@ module macc_control
   output wire                      acc_enable_flag,   // accumulate start flag
   output wire                      psum_store_flag,   // psum store begin flag (both conv and acc) 
   output wire                      shift_finish_flag,
+  output wire                      clip_finish_flag,
   output wire [1:0]                accumulate_mode,   // to control the input of adder pinA and pinB at different mode
 
   //output cnt signals
@@ -355,6 +356,7 @@ reg shift_mac_finish; // finish signal of every shift 1-D conv
 reg shift_mac_finish_all; // finish signal of all clips(the whole line) 1-D conv
 
 assign shift_finish_flag = shift_mac_finish;
+assign clip_finish_flag = shift_mac_finish_all;
 
  always@(posedge clk or posedge rst) begin
     if (rst) begin
@@ -363,7 +365,7 @@ assign shift_finish_flag = shift_mac_finish;
     end else begin
       if(mode) begin
         if(shift_mac_finish) begin
-          if(clip_num_cnt == Para_clip_num_max)begin
+          if(clip_num_cnt == Para_clip_num_max-1)begin
              shift_mac_finish_all <= 1;
              clip_num_cnt <= 0;
           end else begin

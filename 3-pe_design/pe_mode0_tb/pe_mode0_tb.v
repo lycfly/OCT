@@ -62,7 +62,7 @@ wire                              psum_out_valid;
 wire                              fifo_full_fmap;
 wire                              fifo_full_filter;
 wire                              shift_finish_flg;
-
+wire                              clip_finish_flg;
 wire   [PSUM_DATA_WIDTH-1:0]      psum_out;
 wire                              psum_out_en;
 wire   [PSUM_DATA_WIDTH-1:0]      psum_to_bus;
@@ -244,6 +244,7 @@ U_PE_0
    .fifo_full_fmap     ( fifo_full_fmap     ),
    .fifo_full_filter   ( fifo_full_filter   ),
    .shift_finish_flg   ( shift_finish_flg   ),
+   .clip_finish_flg    ( clip_finish_flg   ),
    .psum_out           ( psum_out           ),
    .psum_out_en        ( psum_out_en        ),
    .psum_to_bus        ( psum_to_bus        ));

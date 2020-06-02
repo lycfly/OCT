@@ -10,13 +10,16 @@
 // Description:
 //
 // -----------------------------------------------------------------
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/fifo.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/True_dual_ports_ram.v"
+
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/fifo.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_fmap.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_weight.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc_control.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/True_dual_ports_ram.v"
+
+
 
 `timescale 1ns/1ps
 
@@ -61,6 +64,7 @@ wire                              psum_out_valid;
 wire                              fifo_full_fmap;
 wire                              fifo_full_filter;
 wire                              shift_finish_flg;
+wire                              clip_finish_flg;
 
 wire   [PSUM_DATA_WIDTH-1:0]      psum_out;
 wire                              psum_out_en;
@@ -190,7 +194,11 @@ initial begin
    #2  start_feature_load <= 0;
    // 开始传输第三段feature
    transform_fmap_data(25,37);
-
+   
+  wait(clip_finish_flg ==1);
+  @(posedge clk);
+  start_psum_out <= 1;
+  #2 start_psum_out <= 0;
  end
 
  
@@ -233,6 +241,7 @@ U_PE_0
    .fifo_full_fmap     ( fifo_full_fmap     ),
    .fifo_full_filter   ( fifo_full_filter   ),
    .shift_finish_flg   ( shift_finish_flg   ),
+   .clip_finish_flg    ( clip_finish_flg    ),
    .psum_out           ( psum_out           ),
    .psum_out_en        ( psum_out_en        ),
    .psum_to_bus        ( psum_to_bus        ));

@@ -43,8 +43,8 @@
 /opt/Synopsys/VCS2014/amd64/bin/vcs1
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/novas.tab
 ZONMCM
-81
-sysc_uni_pwd=/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode1_tb/simulation
+80
+sysc_uni_pwd=/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe_mode1_tb/simulation
 XMODIFIERS=@im=ibus
 XDG_SESSION_COOKIE=a0bfd28e837df0a07240a6770000000b-1590714417.254115-1902673987
 XAUTHORITY=/var/run/gdm/auth-for-IC-Rsagp6/database
@@ -73,7 +73,7 @@ SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3257,unix/unix:/tmp/.ICE-unix/3257
 SCRNAME=vcs
 SCRIPT_NAME=vcs
 SCL_HOME=/opt/Synopsys/SCL11.11
-ROWS=46
+ROWS=34
 RC_HOME=/opt/Cadence/RC11
 QT_IM_MODULE=ibus
 QTLIB=/usr/lib64/qt-3.3/lib
@@ -89,7 +89,7 @@ MYVIMRC=/home/IC/.vimrc
 MMSIM_HOME=/opt/Cadence/MMSIM15
 MGLS_LICENSE_FILE=/opt/Mentor/License/License.dat
 MGC_HOME=/opt/Mentor/Calibre2015/ixl_cal_2015.4_16.11
-MDS_HOME=/opt/Mentor/ModelSim/modeltech/bin:/opt/Cadence/INNOVUS15/bin:/opt/Cadence/RC11/bin:/opt/Cadence/Incisive14//tools/bin:/opt/Cadence/MMSIM15/tools/spectre/bin:/opt/Cadence/MMSIM15/tools/dfII/bin:/opt/Cadence/MMSIM15/tools/bin:/opt/Cadence/MMSIM15/bin:/opt/Cadence/IC617/tools/plot/bin:/opt/Cadence/IC617/tools/iccraft/bin:/opt/Cadence/IC617/tools/dracula/bin:/opt/Cadence/IC617/tools/dfII/bin:/opt/Cadence/IC617/tools/bin:/opt/Cadence/IC617/share/bin:/opt/Synopsys/Verdi2015/bin:/opt/Synopsys/Verdi2015/bin:/opt/Synopsys/VCS2014/bin:/opt/Synopsys/Synplify2015/bin:/opt/Synopsys/StarRC2015/bin:/opt/Synopsys/PrimeTime2015/bin:/opt/Synopsys/Laker_OA2015/bin:/opt/Synopsys/ICC2016/bin:/opt/Synopsys/Hspice2016/hspice/bin:/opt/Synopsys/Formality2016/bin:/opt/Synopsys/SCL11.11/linux64/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+MDS_HOME=/opt/Mentor/ModelSim/modeltech/bin:/opt/Cadence/INNOVUS15/bin:/opt/Cadence/RC11/bin:/opt/Cadence/Incisive14//tools/bin:/opt/Cadence/MMSIM15/tools/spectre/bin:/opt/Cadence/MMSIM15/tools/dfII/bin:/opt/Cadence/MMSIM15/tools/bin:/opt/Cadence/MMSIM15/bin:/opt/Cadence/IC617/tools/plot/bin:/opt/Cadence/IC617/tools/iccraft/bin:/opt/Cadence/IC617/tools/dracula/bin:/opt/Cadence/IC617/tools/dfII/bin:/opt/Cadence/IC617/tools/bin:/opt/Cadence/IC617/share/bin:/opt/Synopsys/Verdi2015/bin:/opt/Synopsys/Verdi2015/bin:/opt/Synopsys/VCS2014/bin:/opt/Synopsys/Synplify2015/bin:/opt/Synopsys/StarRC2015/bin:/opt/Synopsys/PrimeTime2015/bin:/opt/Synopsys/Laker_OA2015/bin:/opt/Synopsys/ICC2016/bin:/opt/Synopsys/Hspice2016/hspice/bin:/opt/Synopsys/Formality2016/bin:/opt/Synopsys/SCL11.11/linux64/bin:/opt/KeySight/ADS2015/bin:/opt/Concept/Symutils/linux23.x86_64:/opt/Concept/SpiceVision:/opt/Concept/SGvision:/opt/Concept/RTLvision:/opt/Concept/Gatevision:/opt/Mentor/Calibre2015/ixl_cal_2015.4_16.11/bin:/opt/Mentor/Tessent2013//bin:/opt/Mentor/ModelSim/modeltech/linux:/opt/Cadence/INNOVUS15/bin:/opt/Cadence/RC11/bin:/opt/Cadence/Incisive14//tools/bin:/opt/Cadence/MMSIM15/tools/spectre/bin:/opt/Cadence/MMSIM15/tools/dfII/bin:/opt/Cadence/MMSIM15/tools/bin:/opt/Cadence/MMSIM15/bin:/opt/Cadence/IC617/tools/plot/bin:/opt/Cadence/IC617/tools/iccraft/bin:/opt/Cadence/IC617/tools/dracula/bin:/opt/Cadence/IC617/tools/dfII/bin:/opt/Cadence/IC617/tools/bin:/opt/Cadence/IC617/share/bin:/opt/Synopsys/Verdi2015/bin:/opt/Synopsys/Verdi2015/bin:/opt/Synopsys/VCS2014/bin:/opt/Synopsys/Synplify2015/bin:/opt/Synopsys/StarRC2015/bin:/opt/Synopsys/PrimeTime2015/bin:/opt/Synopsys/Laker_OA2015/bin:/opt/Synopsys/ICC2016/bin:/opt/Synopsys/Hspice2016/hspice/bin:/opt/Synopsys/Formality2016/bin:/opt/Synopsys/SCL11.11/linux64/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/IC/bin
 Laker_HOME=/opt/Synopsys/Laker_OA2015
 LESSOPEN=||/usr/bin/lesspipe.sh %s
 LC_ALL=C
@@ -104,8 +104,6 @@ GTK_RC_FILES=/etc/gtk/gtkrc:/home/IC/.gtkrc-1.2-gnome2
 GNOME_KEYRING_SOCKET=/tmp/keyring-kR9Sdf/socket
 GNOME_KEYRING_PID=3245
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
-GIO_LAUNCHED_DESKTOP_FILE_PID=13038
-GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/gvim.desktop
 GDM_LANG=en_US.UTF-8
 GDM_KEYBOARD_LAYOUT=us
 GDMSESSION=gnome
@@ -117,6 +115,7 @@ DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Fno97QUIcf,guid=3df24e210b07f5a
 Concept_dir=/opt/Concept
 Cadence_Dir=/opt/Cadence
 CVS_RSH=ssh
+COLORTERM=gnome-terminal
 CDS_Netlisting_Mode=Digital
 CDS_LOAD_ENV=CSF
 CDS_LIC_FILE=/opt/Cadence/License/License.dat
@@ -128,14 +127,14 @@ ADS_HOME=/opt/KeySight/ADS2015
 0
 11
 1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v
-1590715060 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/True_dual_ports_ram.v
-1591003848 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v
-1591003811 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v
-1591003745 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc.v
-1590840073 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v
-1590839585 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v
-1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/fifo.v
-1590999387 ../pe_mode1_tb.v
+1590715060 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/True_dual_ports_ram.v
+1591090683 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe.v
+1591090581 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc_control.v
+1591003745 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc.v
+1590840073 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_weight.v
+1590839585 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_fmap.v
+1590676142 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/fifo.v
+1591090840 ../pe_mode1_tb.v
 1453442056 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/novas.tab
 1393560725 /opt/Synopsys/VCS2014/amd64/lib/vcsdp.tab
 5

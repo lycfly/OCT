@@ -63,6 +63,7 @@ output reg                                      psum_out_valid,
 output wire                                     fifo_full_fmap,
 output wire                                     fifo_full_filter,
 output wire                                     shift_finish_flg,
+output wire                                     clip_finish_flg,
 // output data 
 output reg        [DATA_WIDTH-1:0]              psum_out,
 output reg                                      psum_out_en,            //bus read enable  
@@ -249,6 +250,7 @@ wire                       psum_initial_flag;
 wire                       acc_enable_flag;   // accumulate start flag
 wire                       psum_store_flag;   // psum store begin flag (both conv and acc) 
 wire                       shift_finish_flag;
+wire                       clip_finish_flag;
 wire [1:0]                 accumulate_mode;
 //output cnt signals
 wire [IFPAD_WIDTH-1:0]     cnt_a;  // 1-D conv cnt
@@ -265,7 +267,7 @@ always @(posedge clk) psum_acc_finish = acc_finish_flag;
 wire both_pads_ready =  Wpad_data_ready & Fpad_data_ready;
 
 assign shift_finish_flg = shift_finish_flag;   //assign to pe output 
-
+assign clip_finish_flg = clip_finish_flag;
 macc_control #(
     .DATA_WIDTH                     ( DATA_WIDTH        ),
     .IFPAD_WIDTH                    ( IFPAD_WIDTH       ),
@@ -302,6 +304,7 @@ U_MACC_CONTROL_0(
     .acc_enable_flag                ( acc_enable_flag    ),
     .psum_store_flag                ( psum_store_flag    ),
     .shift_finish_flag              ( shift_finish_flag  ),
+    .clip_finish_flag               ( clip_finish_flag   ),
     .accumulate_mode                ( accumulate_mode    ),
     .cnt_a                          ( cnt_a              ),
     .cnt_b                          ( cnt_b              ),
@@ -503,7 +506,7 @@ always @(posedge clk or posedge rst) begin
 		// reset
 		psum_out_ready <= 0;
       end
-	else if (psum_acc_finish) begin
+	else if (psum_acc_finish|clip_finish_flag) begin
 		psum_out_ready <= 1;
 	end else if (psum_transform_finish) begin
 		psum_out_ready <= 0;

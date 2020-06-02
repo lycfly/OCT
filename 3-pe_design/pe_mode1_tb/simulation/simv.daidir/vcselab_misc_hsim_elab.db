@@ -1,5 +1,5 @@
 psSimBaseName                      	simv
-pDaiDir                            	/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe_mode1_tb/simulation/simv.daidir
+pDaiDir                            	/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe_mode1_tb/simulation/simv.daidir
 destPath                           	csrc/
 hsMainFileCount                    	0
 hsMainFileName                     	dummy
