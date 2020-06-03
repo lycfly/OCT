@@ -30,13 +30,23 @@ always #1 clk = ~clk;
 initial begin
   clk = 1;
   rst_n = 1;
-  data = 0;
+  data = 1'bz;
+  $display("test");
+  if(data) 
+    $display("yes");
+  else
+    $display("no");
   #2 rst_n <= 0;
   #2 rst_n <= 1;
+  seq = 128'bx;
+  #6;
   seq = 0;
+
   while(1) begin
+    data = $random%2;
+     
     @(posedge clk) begin 
-      data = $random%2;
+      
       seq = (seq<<1) + data;
     end
   end

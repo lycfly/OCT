@@ -177,3 +177,7 @@ wvSetRadix -win $_nWave2 -format UDec
 wvZoomOut -win $_nWave2
 wvZoomOut -win $_nWave2
 wvZoomOut -win $_nWave2
+verdiWindowResize -win $_Verdi_1 "510" "190" "900" "700"
+wvSetCursor -win $_nWave2 1265301.618098 -snap {("G1" 9)}
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2

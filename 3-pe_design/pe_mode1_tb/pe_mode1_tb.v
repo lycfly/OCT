@@ -195,10 +195,10 @@ initial begin
    // 开始传输第三段feature
    transform_fmap_data(25,37);
    
-  wait(clip_finish_flg ==1);
-  @(posedge clk);
-  start_psum_out <= 1;
-  #2 start_psum_out <= 0;
+    wait(clip_finish_flg ==1);
+    @(posedge clk);
+    start_psum_out <= 1;
+    #2 start_psum_out <= 0;
  end
 
  

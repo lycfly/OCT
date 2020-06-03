@@ -1,5 +1,5 @@
 psSimBaseName                      	simv
-pDaiDir                            	/home/IC/Desktop/1-small_circuit/seq_mod3_detector/simulation/simv.daidir
+pDaiDir                            	/home/IC/Desktop/0-onchiptrain/OCT/OCT/1-small_circuit/0-seq_mod3_detector/simulation/simv.daidir
 destPath                           	csrc/
 hsMainFileCount                    	0
 hsMainFileName                     	dummy

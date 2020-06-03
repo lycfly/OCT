@@ -50,9 +50,9 @@ always@(*)begin
 always@(posedge clk or negedge rst_n) begin
   if(!rst_n) success <= 0;
   else begin
-    case(next_state)
+    case(current_state)
     2'd0: if(data) success <= 0;
-          else success <= 1;
+          else if(data==0) success <= 1;
     2'd1: if(data) success <= 1;
           else success <= 0;
     2'd2: if(data) success <= 0;
