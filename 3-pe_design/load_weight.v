@@ -1,4 +1,3 @@
-`timescale 1ns / 1ps
 // *********************************************************************************
 // Project Name : OCT
 // Create Time  : 2019/9/28 
@@ -14,6 +13,7 @@
 //  
 // *********************************************************************************
 
+`timescale 1ns/1ps
 
 module load_weight
 #(
@@ -25,7 +25,7 @@ module load_weight
 )
 (
 input                                       clk,
-input                                       rst,
+input                                       rst_n,
 
 input                                       weight_load_start,
 input             [DATA_WIDTH-1:0]          weight_in,
@@ -56,7 +56,7 @@ parameter FIFO2RAM_RATIO = DATA_WIDTH/DATA_WIDTH;
    fifo_weight
      (
       .clk       (clk),
-      .rst       (rst),
+      .rst_n     (rst_n),
 
       .wr_en_i   (weight_in_en),
       .wr_data_i (weight_in),
@@ -115,8 +115,8 @@ reg load_data_finish_flag;
  parameter READ_FIFO      = 2'b11;
  parameter LOAD_FROM_FIFO = 2'b10;
 
-always @(posedge clk or posedge rst) begin
-	if (rst) begin
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n) begin
 		// reset
 		FSM <= 0;
 		wea_filter <= 0;
@@ -152,7 +152,7 @@ always @(posedge clk or posedge rst) begin
   		 		fifo_rd_en <= 0;
   		 		wea_filter <= 0;
               end
-          end
+            end
 		// READ_FIFO:begin
 		// 	fifo_rd_en <= 0;
 		// 	wea_filter <= 1;

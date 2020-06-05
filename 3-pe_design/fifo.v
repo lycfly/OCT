@@ -1,4 +1,5 @@
-`timescale 1ns / 1ps
+`timescale 1ns/1ps
+
 // Fifo
 module fifo
   #(
@@ -8,7 +9,7 @@ module fifo
     )
    (
     input         clk,
-    input         rst,
+    input         rst_n,
 
     input [DATA_WIDTH-1:0]  wr_data_i,
     input         wr_en_i,
@@ -26,15 +27,17 @@ module fifo
 
    reg [AW:0] write_pointer;
    reg [AW:0] read_pointer;
-
+   wire almost_full;
+   wire full_o_tmp;
+   assign full_o = almost_full;
    wire          empty_int = (write_pointer[AW] ==
             read_pointer[AW]);
    wire          full_or_empty = (write_pointer[AW-1:0] ==
           read_pointer[AW-1:0]);
    
-   assign full_o  = full_or_empty & !empty_int;
+   assign full_o_tmp  = full_or_empty & !empty_int;
    assign empty_o = full_or_empty & empty_int;
-   //assign almost_full = ((write_pointer[AW-1:0]+1 ==read_pointer[AW-1:0])|full_or_empty)& !empty_int;
+   assign almost_full = (write_pointer[AW-1:0]+1 ==read_pointer[AW-1:0])|full_o_tmp;
    always @(posedge clk) begin
       if (wr_en_i)
   write_pointer <= write_pointer + 1'd1;
@@ -42,7 +45,7 @@ module fifo
       if (rd_en_i)
   read_pointer <= read_pointer + 1'd1;
 
-      if (rst) begin
+      if (!rst_n) begin
    read_pointer  <= 0;
    write_pointer <= 0;
       end

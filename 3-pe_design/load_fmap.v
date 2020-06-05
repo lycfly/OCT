@@ -1,4 +1,3 @@
-`timescale 1ns / 1ps
 // *********************************************************************************
 // Project Name : OCT
 // Create Time  : 2019/9/28 
@@ -13,6 +12,7 @@
 // 2019/9/28    Yicheng Lu         1.0                     Original
 //  
 // *********************************************************************************
+`timescale 1ns/1ps
 
 
 module load_fmap
@@ -25,8 +25,8 @@ module load_fmap
 )
 (
 input                                      clk, 
-input                                      rst,
-//input                                      source_clk,              //clk of data in bus
+input                                      rst_n,
+
 
 input                                      fmap_load_start,
 input             [DATA_WIDTH-1:0]         fmap_in,
@@ -60,7 +60,7 @@ parameter FIFO2RAM_RATIO = DATA_WIDTH/DATA_WIDTH; // bus data width/fifo data wi
    fifo_fmap
      (
       .clk       (clk),
-      .rst       (rst),
+      .rst_n     (rst_n),
 
       .wr_en_i   (fmap_in_en),
       .wr_data_i (fmap_in),
@@ -80,8 +80,8 @@ reg           [ADDRESSWIDTH_F_PAD-1:0] waddra_ifmap;      // input weight read a
 reg           [ADDRESSWIDTH_F_PAD-1:0] waddra_ifmap_delay1;      // input weight read address
 
 wire          [DATA_WIDTH-1:0]         ram_fmap_in;
-always @(posedge clk or posedge rst) begin
-  if(rst) begin
+always @(posedge clk or negedge rst_n) begin
+  if(!rst_n) begin
     waddra_ifmap_delay1 <= 0;
   end else begin
     waddra_ifmap_delay1<=waddra_ifmap;  // because the data write need 2 period, so the address need to delay 1 period
@@ -105,8 +105,8 @@ reg [2:0] next_state;
 
 
 
-always@(posedge clk or posedge rst) begin
-  if(rst) current_state <= 0;
+always@(posedge clk or posedge rst_n) begin
+  if(rst_n) current_state <= 0;
   else current_state <= next_state;
 end
 
@@ -140,8 +140,8 @@ wire [1:0] control_bits = {all_column_flag,load_full_cloumn_flg};
 
 
 ////////////////////////////////////////////
-always @(posedge clk or posedge rst) begin
-	if (rst) begin
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n) begin
 		// reset
 		FSM              <= 0;
 		wea_ifmap        <= 0;
@@ -185,7 +185,7 @@ always @(posedge clk or posedge rst) begin
 		 WAIT: begin
 		    fmap_ready_to_pe <= 0;	
 		    load_one_cloumn_finish <= 0; 
-	 	    if (!empty && !load_one_cloumn_finish)begin
+	 	    if (!empty && ((load_one_cloumn_num==1)|!load_one_cloumn_finish))begin
     			fifo_rd_en <= 1;
     			wea_ifmap <= 0;
     			FSM <= LOAD_FROM_FIFO;

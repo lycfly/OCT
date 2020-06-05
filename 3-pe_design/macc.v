@@ -1,6 +1,9 @@
 // Signed 40-bit streaming accumulator with 16-bit inputs
 // File: macc.v
 //
+//
+`timescale 1ns/1ps
+
 module macc  # (
                 parameter SIZEIN = 16, SIZEOUT = 40
                )

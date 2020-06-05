@@ -10,16 +10,17 @@
 // Description:
 //
 // -----------------------------------------------------------------
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/fifo.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_fmap.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/load_weight.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/macc_control.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/pe.v"
-`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/pe_design/True_dual_ports_ram.v"
-
-
 `timescale 1ns/1ps
+
+
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/fifo.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_fmap.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_weight.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc_control.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe.v"
+`include "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/True_dual_ports_ram.v"
+
 
 module pe_mode0_tb();
 
@@ -33,7 +34,7 @@ parameter PSUM_PAD_SIZE   = 3; // for test
 parameter PE_FIFO_SIZE    = 2;
 
 reg                         clk;
-reg                         rst;
+reg                         rst_n;
 reg        [PARA_WIDTH-1:0] S;
 reg        [PARA_WIDTH-1:0] U;
 reg        [PARA_WIDTH-1:0] q;
@@ -91,8 +92,8 @@ initial begin
   weight_in_en = 0;
   psum_in = 0;
   start_psum_out = 0;
-  rst = 0;
-  #4 rst = 1; #2 rst = 0;
+  rst_n = 1;
+  #4 rst_n = 0; #2 rst_n = 1;
   @(posedge clk) start_config = 1;
   @(posedge clk) start_config = 0;
   
@@ -217,7 +218,7 @@ pe #(  .DATA_WIDTH      ( DATA_WIDTH      ),
        .PE_FIFO_SIZE    ( PE_FIFO_SIZE    ))
 U_PE_0
 (  .clk                ( clk                ),
-   .rst                ( rst                ),
+   .rst_n              ( rst_n                ),
    .S                  ( S                  ),
    .U                  ( U                  ),
    .q                  ( q                  ),
@@ -240,14 +241,13 @@ U_PE_0
    .start_psum_out     ( start_psum_out     ),
    .mac_finish         ( mac_finish         ),
    .psum_acc_finish    ( psum_acc_finish    ),
-   .psum_out_valid     ( psum_out_valid     ),
    .fifo_full_fmap     ( fifo_full_fmap     ),
    .fifo_full_filter   ( fifo_full_filter   ),
    .shift_finish_flg   ( shift_finish_flg   ),
-   .clip_finish_flg    ( clip_finish_flg   ),
+   .clip_finish_flg    ( clip_finish_flg    ),
    .psum_out           ( psum_out           ),
-   .psum_out_en        ( psum_out_en        ),
-   .psum_to_bus        ( psum_to_bus        ));
+   .psum_out_en        ( psum_out_en        ));
+
 
 
 initial begin

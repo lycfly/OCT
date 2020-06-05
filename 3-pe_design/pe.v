@@ -12,8 +12,8 @@
 //
 // -FHDR------------------------------------------------------------
 
-
 `timescale 1ns/1ps
+
 
 module pe
 #( parameter DATA_WIDTH      = 16,
@@ -28,7 +28,7 @@ module pe
 
 (
 input                                           clk,
-input                                           rst,
+input                                           rst_n,
 //input                               en,
 /*config parameters*/
 input             [PARA_WIDTH-1 : 0]            S,                        //8bits
@@ -59,15 +59,13 @@ input                                           psum_in_en,         //external p
 // output status signal */
 output reg                                      mac_finish,
 output reg                                      psum_acc_finish,
-output reg                                      psum_out_valid,
 output wire                                     fifo_full_fmap,
 output wire                                     fifo_full_filter,
 output wire                                     shift_finish_flg,
 output wire                                     clip_finish_flg,
 // output data 
 output reg        [DATA_WIDTH-1:0]              psum_out,
-output reg                                      psum_out_en,            //bus read enable  
-output reg        [DATA_WIDTH-1:0]              psum_to_bus
+output reg                                      psum_out_en            //bus read enable  
 );
 
  
@@ -80,7 +78,7 @@ parameter WPAD_WIDTH      = PARA_WIDTH;
 parameter OFPAD_WIDTH     = PARA_WIDTH;
 parameter MAX_CLIP_WIDTH  = PARA_WIDTH;
 parameter MAX_SHIFT_WIDTH = PARA_WIDTH;
-parameter OUT_DATA_WIDTH  = PSUM_DATA_WIDTH; // 2*data_width + ifpad_width
+parameter OUT_DATA_WIDTH  = PSUM_DATA_WIDTH; 
 
 reg  [ADDRESSWIDTH_W_PAD-1:0]        weight_num;
 reg  [ADDRESSWIDTH_F_PAD-1:0]        pixel_num;
@@ -106,7 +104,7 @@ assign Para_1Dconv_len = pixel_num;
 //                   Load Config Parameter
 //----------------------------------------------------------------
 always @(posedge clk) begin
-  if (rst) begin
+  if (!rst_n) begin
     // reset
     weight_num <= 0;
     pixel_num <= 0;
@@ -156,7 +154,7 @@ load_fmap #(
 )
 U_LOAD_FMAP_0
 (  .clk                    ( clk                    ),
-   .rst                    ( rst                    ),
+   .rst_n                  ( rst_n                  ),
    .fmap_load_start        ( start_feature_load     ),
    .fmap_in                ( feature_in             ),
    .fmap_in_en             ( feature_in_en          ),
@@ -208,7 +206,7 @@ load_weight #(
 )
 U_LOAD_WEIGHT_0
 (  .clk                ( clk                ),
-   .rst                ( rst                ),
+   .rst_n              ( rst_n              ),
    .weight_load_start  ( start_weight_load  ),
    .weight_in          ( weight_in          ),
    .weight_in_en       ( weight_in_en       ),
@@ -236,8 +234,8 @@ wire                           acc_begin;
 wire                           interrupt;
 wire                           restore;
 // Date input signals
-reg      [DATA_WIDTH-1:0]      external_psum; // external psum input 
-reg      [OUT_DATA_WIDTH-1:0]  internal_psum; // internal psum input (psum_pad[c])
+reg       [DATA_WIDTH-1:0]      external_psum; // external psum input 
+reg signed[OUT_DATA_WIDTH-1:0]  internal_psum; // internal psum input (psum_pad[c])
 wire     [DATA_WIDTH-1:0]      mac_fmap_in;
 wire     [DATA_WIDTH-1:0]      mac_weight_in;
 
@@ -252,14 +250,14 @@ wire                       psum_store_flag;   // psum store begin flag (both con
 wire                       shift_finish_flag;
 wire                       clip_finish_flag;
 wire [1:0]                 accumulate_mode;
+wire                       interrupt_state_flag;
 //output cnt signals
 wire [IFPAD_WIDTH-1:0]     cnt_a;  // 1-D conv cnt
 wire [OFPAD_WIDTH-1:0]     cnt_b;  // output channel cnt    
 wire [MAX_SHIFT_WIDTH-1:0] cnt_shift;    // shift conv num cnt
 wire [MAX_CLIP_WIDTH-1:0]  cnt_clip;  // clip num cnt  // MAC output 
-
 // MAC output 
-wire     [OUT_DATA_WIDTH-1:0]  accum_out;
+wire  signed   [OUT_DATA_WIDTH-1:0]  accum_out;
 assign mac_fmap_in = fmap_out;
 assign mac_weight_in = weight_out;
 
@@ -268,6 +266,7 @@ wire both_pads_ready =  Wpad_data_ready & Fpad_data_ready;
 
 assign shift_finish_flg = shift_finish_flag;   //assign to pe output 
 assign clip_finish_flg = clip_finish_flag;
+
 macc_control #(
     .DATA_WIDTH                     ( DATA_WIDTH        ),
     .IFPAD_WIDTH                    ( IFPAD_WIDTH       ),
@@ -278,7 +277,7 @@ macc_control #(
     .MAX_SHIFT_WIDTH                ( MAX_SHIFT_WIDTH   ))
 U_MACC_CONTROL_0(
     .clk                            ( clk                ),
-    .rst                            ( rst               ),
+    .rst_n                          ( rst_n              ),
    
     .Para_1Dconv_len                ( Para_1Dconv_len    ),
     .Para_filter_num                ( Para_filter_num    ),
@@ -306,6 +305,7 @@ U_MACC_CONTROL_0(
     .shift_finish_flag              ( shift_finish_flag  ),
     .clip_finish_flag               ( clip_finish_flag   ),
     .accumulate_mode                ( accumulate_mode    ),
+    .interrupt_state_flag           ( interrupt_state_flag),
     .cnt_a                          ( cnt_a              ),
     .cnt_b                          ( cnt_b              ),
     .cnt_shift                      ( cnt_shift          ),
@@ -326,10 +326,10 @@ wire pad_full_to_restore = pad_full|delay1|delay2|delay3;
  
 reg pad_full_to_restore_delay;
 
-assign restore = pad_full_to_restore_delay & (~pad_full_to_restore) & both_pads_ready;
+assign restore = pad_full_to_restore_delay & (~pad_full_to_restore) & both_pads_ready &interrupt_state_flag;
 assign interrupt =  (~pad_full_delay ) & pad_full & both_pads_ready;
-always@(posedge clk or posedge rst) begin
-  if(rst) begin
+always@(posedge clk or negedge rst_n) begin
+  if(!rst_n) begin
     pad_full_delay <= 0;
     pad_full_to_restore_delay <= 0;
     {delay1,delay2,delay3} <= 3'b0;
@@ -350,8 +350,8 @@ wire pads_ready_posedge;
 assign mac_fmap_in = fmap_out;
 assign mac_weight_in = weight_out;
 
-always @(posedge clk or posedge rst) begin
-    if(rst) begin
+always @(posedge clk or negedge rst_n) begin
+    if(!rst_n) begin
       both_pads_ready_delay <= 0;
       fmap_load_start_delay <= 0;
     end else begin
@@ -412,8 +412,8 @@ end
 wire  [ADDRESSWIDTH_W_PAD-1:0] weight_shift_num;
 assign weight_shift_num = load_one_cloumn_num*cnt_shift;
 
-always @(posedge clk or posedge rst) begin
-  if(rst) begin
+always @(posedge clk or negedge rst_n) begin
+  if(!rst_n) begin
     base_weight_address <= 0; 
   end else begin
     if(mode & both_pads_ready & mac_finish_flag) 
@@ -423,12 +423,13 @@ always @(posedge clk or posedge rst) begin
   end
 end
 
-always@(posedge clk or posedge rst) begin
-  if (rst) begin
+always@(posedge clk or negedge rst_n) begin
+  if (!rst_n) begin
     weight_addr <= 0;
     ifmap_addr <= 0;
     //base_weight_address <= 0;
   end else begin 
+  
     if(mul_enable_flag) begin
       if(mode) begin
         if(both_pads_ready) begin
@@ -459,8 +460,8 @@ end
 //----------------------------------------------------------------
 //            Psum Pad Control Logic
 //----------------------------------------------------------------
-always@(posedge clk or posedge rst) begin
-  if (rst) begin
+always@(posedge clk or negedge rst_n) begin
+  if (!rst_n) begin
     c <= 0;
     c_delay <= 0;
   end
@@ -491,8 +492,15 @@ wire psum_transform_finish;
 assign psum_transform_finish = (psum_read_address==psum_num);
 assign psum_transform_start = psum_out_ready&start_psum_out;
 reg psum_transforming;
-always @(posedge clk or posedge rst) begin
-  if (rst) begin
+
+wire signed [OUT_DATA_WIDTH-1: 0] psum_tmp;
+wire signed [DATA_WIDTH-1:0] psum_clip;
+// clip the psum to data width
+assign psum_tmp = psum_pad[psum_read_address];
+assign psum_clip = (psum_tmp > ((1 << (DATA_WIDTH-1))-1)) ? ((1 << (DATA_WIDTH-1))-1) : ( (psum_tmp < -(1 << (DATA_WIDTH-1))) ? -(1 << (DATA_WIDTH-1)) : {psum_tmp[OUT_DATA_WIDTH-1],psum_tmp[DATA_WIDTH-2:0]});
+
+always @(posedge clk or negedge rst_n) begin
+  if (!rst_n) begin
     psum_transforming <= 0;
   end else begin
     if(psum_transform_start) psum_transforming <= 1;
@@ -501,8 +509,8 @@ always @(posedge clk or posedge rst) begin
   end
 end
 
-always @(posedge clk or posedge rst) begin
-	if (rst) begin
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n) begin
 		// reset
 		psum_out_ready <= 0;
       end
@@ -515,20 +523,20 @@ always @(posedge clk or posedge rst) begin
       end
     end
 
-always @(posedge clk or posedge rst) begin
-	if (rst) begin
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n) begin
 		// reset
 		psum_read_address <= 0;
 		psum_out_en <= 0;
       end
 	else if (~psum_transform_finish&psum_transforming) begin
-	    psum_read_address <= psum_read_address + 1;
-        psum_to_bus = psum_pad[psum_read_address];
+        psum_read_address <= psum_read_address + 1;
+        psum_out <= psum_clip; 
 	    psum_out_en <= 1;
 	end else begin
 		psum_read_address <= 0;
 		psum_out_en <= 0;
-        psum_to_bus = 0;
+        psum_out <= 0;
       end
     end
 

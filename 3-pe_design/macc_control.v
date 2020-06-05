@@ -14,8 +14,8 @@
 
 
 
-
 `timescale 1ns/1ps
+
 
 module macc_control
 #(
@@ -30,7 +30,7 @@ module macc_control
 )
 (
   input                            clk,
-  input                            rst,
+  input                            rst_n,
 
   // Control Paramerters
   input      [IFPAD_WIDTH-1:0]     Para_1Dconv_len,   // 1-D conv length 
@@ -47,7 +47,7 @@ module macc_control
   input                            both_pads_ready,
   // Date input signals
   input      [DATA_WIDTH-1:0]      external_psum,     // external psum input 
-  input      [DATA_WIDTH-1:0]      internal_psum,     // internal psum input (psum_pad[c])
+  input      [OUT_DATA_WIDTH-1:0]  internal_psum,     // internal psum input (psum_pad[c])
   input      [DATA_WIDTH-1:0]      ifmap_in,          // ifmap input 
   input      [DATA_WIDTH-1:0]      weight_in,         // weight input 
  
@@ -62,7 +62,7 @@ module macc_control
   output wire                      shift_finish_flag,
   output wire                      clip_finish_flag,
   output wire [1:0]                accumulate_mode,   // to control the input of adder pinA and pinB at different mode
-
+  output wire                      interrupt_state_flag,
   //output cnt signals
   output wire [IFPAD_WIDTH-1:0]    cnt_a,             // 1-D conv cnt
   output wire [OFPAD_WIDTH-1:0]    cnt_b,             // output channel cnt    
@@ -73,7 +73,6 @@ module macc_control
   output     [OUT_DATA_WIDTH-1:0]  accum_out          // mac unit output
 
 );
-
 
 
 wire mac_begin_;  // control the MAC FSM
@@ -103,8 +102,8 @@ assign interrupt_store_flag = interrupt_store&(~interrupt_store_delay);
 reg interrupt_state;        // =1 when interrupt is high,=0 when mac_finish
 reg restore_state;          // =1 when restore is high,=0 when mac_finish,used to make psum initial signal
 
-always@(posedge clk or posedge rst) begin
-  if(rst) begin
+always@(posedge clk or negedge rst_n) begin
+  if(!rst_n) begin
     {interrupt_state,restore_state} <= {1'b0,1'b0};
   end else begin
     if(mac_finish_flag) {interrupt_state,restore_state} <= {1'b0,1'b0};
@@ -113,6 +112,7 @@ always@(posedge clk or posedge rst) begin
     else {interrupt_state,restore_state} <= {interrupt_state,restore_state};
   end
 end
+assign interrupt_state_flag = interrupt_state;
 
 
 // MAC app signal delay
@@ -129,8 +129,8 @@ assign mul_enable_flag = mul_start;                                    //  conv 
 assign psum_store_flag = mac_finish_flag | acc_start2 | interrupt_store_flag; // psum store begin flag (both conv and acc) 
 assign acc_finish_flag = acc_finish;
 // delay logic
-always@(posedge clk or posedge rst) begin
-  if(rst) begin
+always@(posedge clk or negedge rst_n) begin
+  if(!rst_n) begin
     {gate,gate_delay1,gate_delay2}    <= {1'b1,1'b1,1'b1};
     {clear,clear_delay1,clear_delay2} <= {1'b1,1'b1,1'b1};
     {exter,exter_delay1,exter_delay2} <= {1'b0,1'b0,1'b0};
@@ -166,8 +166,8 @@ parameter ACC_END   = 3'b100;  // Accumulate finish
 reg [2:0] mac_curr_state;
 reg [2:0] mac_next_state;
 reg [2:0] mac_cyc_delay_cnt;
-always@(posedge clk or posedge rst) begin
-    if(rst) mac_curr_state <= IDLE;
+always@(posedge clk or negedge rst_n) begin
+    if(!rst_n) mac_curr_state <= IDLE;
     else mac_curr_state <= mac_next_state;
   end
 always@(*) begin
@@ -198,8 +198,8 @@ always@(*) begin
     endcase
   end
 
-always @(posedge clk or posedge rst) begin
-    if(rst)begin
+always @(posedge clk or negedge rst_n) begin
+    if(!rst_n)begin
         a          <= 0;
         b          <= 0;
         clear      <= 1;
@@ -303,8 +303,8 @@ always @(posedge clk or posedge rst) begin
  // to the last psum value.
 reg mul_start3;
 wire psum_initial_flag_1;
-always@(posedge clk or posedge rst) begin
-    if (rst) begin
+always@(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
        psum_initial_flag <= 0;
        mul_start3 <= 0;
     end else begin 
@@ -317,8 +317,8 @@ assign psum_initial_flag_1 = mul_start2&(~mul_start3)&((~first_clip_flag)|restor
 assign accumulate_mode = {acc_enable_flag,mul_start2}; // to control the input of adder pinA and pinB at different mode
 
 // MAC input signal control
-  always@(posedge clk or posedge rst) begin
-    if (rst) begin
+  always@(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
         ma <= 0;
 	    mb <= 0;
         external_psum_mac <= 0;
@@ -358,8 +358,8 @@ reg shift_mac_finish_all; // finish signal of all clips(the whole line) 1-D conv
 assign shift_finish_flag = shift_mac_finish;
 assign clip_finish_flag = shift_mac_finish_all;
 
- always@(posedge clk or posedge rst) begin
-    if (rst) begin
+ always@(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       clip_num_cnt <= 0;
       shift_mac_finish_all <= 0;
     end else begin
@@ -386,8 +386,8 @@ assign clip_finish_flag = shift_mac_finish_all;
 
 
 
- always@(posedge clk or posedge rst) begin
-    if (rst) begin
+ always@(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       shift_cnt <= 0;
       shift_begin <= 0;
     end
@@ -419,8 +419,8 @@ end
 
 //reg first_clip_state;
 
- always@(posedge clk or posedge rst) begin
-    if (rst) begin
+ always@(posedge clk or negedge rst_n) begin
+    if ( !rst_n) begin
       first_clip_flag <= 0;
       shift_mac_finish <= 0;
     end

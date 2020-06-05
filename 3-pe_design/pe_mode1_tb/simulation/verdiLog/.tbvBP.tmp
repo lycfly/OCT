@@ -1,0 +1,2 @@
+Simulation Mode: VCS
+stop -line 329 -file /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc_control.v 

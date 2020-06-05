@@ -36,7 +36,7 @@ parameter PSUM_PAD_SIZE   = 9;
 parameter PE_FIFO_SIZE    = 2;
 
 reg                         clk;
-reg                         rst;
+reg                         rst_n;
 reg        [PARA_WIDTH-1:0] S;
 reg        [PARA_WIDTH-1:0] U;
 reg        [PARA_WIDTH-1:0] q;
@@ -60,7 +60,6 @@ reg                         start_psum_out;
 
 wire                              mac_finish;
 wire                              psum_acc_finish;
-wire                              psum_out_valid;
 wire                              fifo_full_fmap;
 wire                              fifo_full_filter;
 wire                              shift_finish_flg;
@@ -68,7 +67,6 @@ wire                              clip_finish_flg;
 
 wire   [PSUM_DATA_WIDTH-1:0]      psum_out;
 wire                              psum_out_en;
-wire   [PSUM_DATA_WIDTH-1:0]      psum_to_bus;
 
 
 always #1 clk = ~clk;
@@ -93,8 +91,8 @@ initial begin
   weight_in_en = 0;
   psum_in = 0;
   start_psum_out = 0;
-  rst = 0;
-  #4 rst = 1; #2 rst = 0;
+  rst_n = 1;
+  #4 rst_n = 0; #2 rst_n = 1;
   @(posedge clk) start_config = 1;
   @(posedge clk) start_config = 0;
   
@@ -123,7 +121,7 @@ task transform_fmap_data;
      @(posedge clk); 
      if(feature_in_en==1)begin
        $display("transform fmap: value = %d",idx_f );
-       feature_in  = idx_f;
+       feature_in  = -idx_f;
        idx_f = idx_f + 1; 
      end
      #2;       
@@ -214,7 +212,7 @@ pe #(  .DATA_WIDTH      ( DATA_WIDTH      ),
        .PE_FIFO_SIZE    ( PE_FIFO_SIZE    ))
 U_PE_0
 (  .clk                ( clk                ),
-   .rst                ( rst                ),
+   .rst_n              ( rst_n                ),
    .S                  ( S                  ),
    .U                  ( U                  ),
    .q                  ( q                  ),
@@ -237,14 +235,12 @@ U_PE_0
    .start_psum_out     ( start_psum_out     ),
    .mac_finish         ( mac_finish         ),
    .psum_acc_finish    ( psum_acc_finish    ),
-   .psum_out_valid     ( psum_out_valid     ),
    .fifo_full_fmap     ( fifo_full_fmap     ),
    .fifo_full_filter   ( fifo_full_filter   ),
    .shift_finish_flg   ( shift_finish_flg   ),
    .clip_finish_flg    ( clip_finish_flg    ),
    .psum_out           ( psum_out           ),
-   .psum_out_en        ( psum_out_en        ),
-   .psum_to_bus        ( psum_to_bus        ));
+   .psum_out_en        ( psum_out_en        ));
 
 
 initial begin
