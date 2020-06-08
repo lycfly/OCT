@@ -1072,3 +1072,57 @@ verdiWindowResize -win $_Verdi_1 "0" "25" "1440" "824"
 verdiWindowResize -win $_Verdi_1 "0" "25" "1920" "1004"
 srcDeselectAll -win $_nTrace1
 debReload
+srcDeselectAll -win $_nTrace1
+debSaveSession \
+           /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation/6_5.ses \
+           -keynote \
+           {invoke directory: /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe_mode1_tb/simulation
+command line: -sv ../pe_mode1_tb.v -ba 
+current trace scope: pe_mode1_tb.U_PE_0.U_LOAD_FMAP_0.fifo_fmap
+memo:}
+wvSaveSignal -win $_nWave2 \
+           "/home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation/6_5.rc"
+verdiWindowResize -win $_Verdi_1 "0" "25" "1440" "824"
+verdiWindowResize -win $_Verdi_1 "0" "25" "1920" "1004"
+verdiWindowResize -win $_Verdi_1 "0" "25" "1440" "824"
+verdiWindowResize -win $_Verdi_1 "0" "25" "1920" "1004"
+verdiWindowResize -win $_Verdi_1 "0" "25" "1440" "824"
+verdiWindowResize -win $_Verdi_1 "0" "25" "1920" "1004"
+srcDeselectAll -win $_nTrace1
+srcSelect -win $_nTrace1 -range {51 54 1 1 1 1}
+wvSetCursor -win $_nWave2 20892.531616 -snap {("G1" 8)}
+wvSetCursor -win $_nWave2 23101.550882 -snap {("G1" 9)}
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvZoom -win $_nWave2 3406.680314 45138.514166
+wvZoomOut -win $_nWave2
