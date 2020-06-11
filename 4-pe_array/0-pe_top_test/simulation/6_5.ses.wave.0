@@ -1,0 +1,131 @@
+Magic 271485
+Revision Verdi3_K-2015.09-SP1-1
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 28 1700 433 254 120
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation/novas.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 0.000000 2020000.000000
+cursor 1785000.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 46
+; marker line index
+markerPos 53
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation/novas.fsdb"
+addSignal -h 15 /pe_top_tb/clk
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 -holdScope start_config
+addSignal -h 15 -holdScope config_state
+addSignal -h 15 -holdScope ce
+addSignal -h 15 -holdScope start_weight_load
+addSignal -h 15 -holdScope start_feature_load
+addSignal -h 15 -holdScope load_full_cloumn
+addSignal -h 15 -holdScope mode
+addSignal -h 15 -UNSIGNED -UDEC -holdScope weight_glb_address[5:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope feature_glb_address[3:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope weight_from_glb[15:0]
+addSignal -h 15 -holdScope start_psum_in_load
+addSignal -h 15 -holdScope last_pe_data_valid
+addSignal -h 15 -UNSIGNED -HEX -holdScope last_pe_data_in[15:0]
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_WEIGHT_0/weight_scratch_pad/ram_block[127:0]
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/U_MACC_CONTROL_0/ifmap_in[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope weight_in[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope internal_psum[47:0]
+addSignal -h 15 -holdScope interrupt
+addSignal -h 15 -holdScope restore
+addSignal -h 15 -holdScope both_pads_ready
+addSignal -h 15 -holdScope shift_finish_flag
+addSignal -h 15 -holdScope clip_finish_flag
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/U_MACC_CONTROL_0/U_MACC_0/a[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope b[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope internal_psum[47:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope accum_out[47:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope mult_result[31:0]
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/U_MACC_CONTROL_0/psum_initial_flag_1
+addSignal -h 15 -UNSIGNED -HEX -holdScope accumulate_mode[1:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope internal_psum_mac[47:0]
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/internal_psum[47:0]
+addSignal -h 15 -holdScope psum_initial_flag
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/U_MACC_CONTROL_0/first_clip_flag
+addSignal -h 15 -holdScope restore_state
+addSignal -h 15 -holdScope restore
+addSignal -h 15 -holdScope interrupt
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/pad_full
+addSignal -h 15 -holdScope delay1
+addSignal -h 15 -holdScope delay2
+addSignal -h 15 -holdScope delay3
+addSignal -h 15 -UNSIGNED -HEX /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_WEIGHT_0/raddra_filter[6:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope waddra_filter[6:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope raddra_filter[6:0]
+addSignal -h 15 -UNSIGNED -HEX /pe_top_tb/U_PE_TOP_0/U_PE_0/weight_addr[7:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope ifmap_addr[5:0]
+addSignal -h 15 -holdScope start_feature_load
+addSignal -h 15 -holdScope start_weight_load
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/U_MACC_CONTROL_0/interrupt_state
+addSignal -h 15 -holdScope restore_state
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/psum_pad[15:0]
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/mac_finish
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/Wpad_full
+addSignal -h 15 -holdScope Fpad_full
+addSignal -h 15 -holdScope pad_full_to_restore
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/feature_from_glb[15:0]
+addSignal -h 15 -holdScope weight_read_en
+addSignal -h 15 -holdScope feature_read_en
+addSignal -h 15 -holdScope fmap_bus_ready
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/fmap_in[15:0]
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/fifo_fmap/wr_en_i
+addSignal -h 15 -UNSIGNED -HEX /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/waddra_ifmap[5:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope waddra_ifmap_delay1[5:0]
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/fifo_fmap/mem[3:0]
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/fmap_in_en
+addSignal -h 15 -UNSIGNED -UDEC -holdScope feature_pad[63:0]
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/fifo_fmap/rd_en_i
+addSignal -h 15 -holdScope clk
+addSignal -h 15 -UNSIGNED -HEX /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/FSM[1:0]
+addSignal -h 15 -holdScope load_one_cloumn_finish
+addSignal -h 15 -UNSIGNED -UDEC /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/fifo_fmap/rd_data_o[15:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope read_pointer[2:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope write_pointer[2:0]
+addSignal -h 15 -holdScope full_o
+addSignal -h 15 -holdScope empty_o
+addSignal -h 15 /pe_top_tb/U_PE_TOP_0/U_PE_0/U_LOAD_FMAP_0/fifo_rd_en
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

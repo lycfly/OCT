@@ -1,0 +1,96 @@
+Magic 271485
+Revision Verdi3_K-2015.09-SP1-1
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 28 1920 406 231 195
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe_mode1_tb/simulation/novas.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 0.000000 39070.364856
+cursor 13000.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 8
+; marker line index
+markerPos 19
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe_mode1_tb/simulation/novas.fsdb"
+addSignal -h 15 /pe_mode1_tb/clk
+addSignal -h 15 -holdScope start_config
+addSignal -h 15 -holdScope start_weight_load
+addSignal -h 15 -holdScope start_feature_load
+addSignal -h 15 -holdScope start_psum_in_load
+addSignal -h 15 -holdScope load_full_cloumn
+addSignal -h 15 -holdScope mode
+addSignal -h 15 -2COMP -UDEC -holdScope feature_in[15:0]
+addSignal -h 15 -holdScope feature_in_en
+addSignal -h 15 -2COMP -UDEC -holdScope weight_in[15:0]
+addSignal -h 15 -holdScope weight_in_en
+addSignal -h 15 -holdScope start_psum_out
+addSignal -h 15 -UNSIGNED -HEX /pe_mode1_tb/U_PE_0/psum_read_address[3:0]
+addSignal -h 15 -2COMP -UDEC -holdScope psum_out[15:0]
+addSignal -h 15 /pe_mode1_tb/psum_out_en
+addSignal -h 15 /pe_mode1_tb/U_PE_0/shift_finish_flg
+addSignal -h 15 -2COMP -UDEC /pe_mode1_tb/U_PE_0/U_LOAD_FMAP_0/fifo_fmap/wr_data_i[15:0]
+addSignal -h 15 -holdScope wr_en_i
+addSignal -h 15 -2COMP -UDEC -holdScope mem[3:0]
+addSignal -h 15 /pe_mode1_tb/U_PE_0/clip_finish_flag
+addSignal -h 15 -UNSIGNED -HEX /pe_mode1_tb/U_PE_0/U_MACC_CONTROL_0/clip_num_cnt[7:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope Para_clip_num_max[7:0]
+addSignal -h 15 -holdScope shift_mac_finish
+addGroup "G2"
+addSignal -h 15 /pe_mode1_tb/U_PE_0/rst_n
+addSignal -h 15 -2COMP -UDEC /pe_mode1_tb/U_PE_0/U_MACC_CONTROL_0/U_MACC_0/b[15:0]
+addSignal -h 15 -2COMP -UDEC -holdScope a[15:0]
+addSignal -h 15 -2COMP -UDEC -holdScope internal_psum[47:0]
+addSignal -h 15 -2COMP -UDEC -holdScope accum_out[47:0]
+addSignal -h 15 -2COMP -UDEC -holdScope mult_result[31:0]
+addSignal -h 15 -2COMP -UDEC -holdScope PinA[47:0]
+addSignal -h 15 -2COMP -UDEC -holdScope PinB[47:0]
+addSignal -h 15 -2COMP -UDEC /pe_mode1_tb/U_PE_0/accum_out[47:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope accumulate_mode[1:0]
+addSignal -h 15 -holdScope psum_initial_flag
+addSignal -h 15 -2COMP -UDEC -holdScope accum_out[47:0]
+addSignal -h 15 -2COMP -UDEC /pe_mode1_tb/U_PE_0/U_MACC_CONTROL_0/mb[15:0]
+addSignal -h 15 -2COMP -UDEC -holdScope ma[15:0]
+addSignal -h 15 -2COMP -UDEC -holdScope weight_in[15:0]
+addSignal -h 15 -2COMP -UDEC -holdScope ifmap_in[15:0]
+addSignal -h 15 -2COMP -UDEC -holdScope internal_psum_mac[47:0]
+addSignal -h 15 -2COMP -UDEC /pe_mode1_tb/U_PE_0/psum_pad[15:0]
+addGroup "G3"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

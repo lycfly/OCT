@@ -1,0 +1,67 @@
+@verdi rc file Version 1.0
+[General]
+VerdiVersion = Verdi3_K-2015.09-SP1-1
+[KeyNote]
+Line1 = Automatic Backup 0
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+[hb]
+postSimFile = /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation/novas.fsdb
+syncTime = 1785000
+viewport = 0 25 1920 1004 199 408 405 212
+activeNode = "pe_top_tb.U_PE_TOP_0.U_PE_0"
+activeScope = "pe_top_tb.U_PE_TOP_0.U_PE_0"
+activeFile = "/home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe.v"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 48
+baMode = False
+srcLineNum = True
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+traceCrossHier = True
+DnDtraceCrossHierOnly = True
+traceIncTopPort = False
+leadingZero = False
+signalPane = False
+Scope1 = "pe_top_tb.U_PE_TOP_0.U_PE_0"
+multipleSelection = 1 17 2 0 0
+sdfCheckUndef = FALSE
+[hb.sourceTab.1]
+scope = pe_top_tb.U_PE_TOP_0.U_PE_0
+File = /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe.v
+Line = 49
+[imp.design1]
+dbEnum =  oh
+invokeDir = /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation
+design = DebussyLib
+hostCommand = hostCommand -sv ../pe_top_tb.v
+[nMemoryManager]
+FsdbFile = /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation/novas.fsdb
+UserActionNum = 0
+nMemWindowNum = 0
+[wave.0]
+viewPort = 0 28 1700 433 254 120
+SessionFile = /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/0-pe_top_test/simulation/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSync = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE
