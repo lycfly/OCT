@@ -131,14 +131,14 @@ ADS_HOME=/opt/KeySight/ADS2015
 1591773777 /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/psum_in_router.v
 1591193529 /home/IC/Desktop/0-onchiptrain/OCT/OCT/Constant.v
 1591169770 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/True_dual_ports_ram.v
-1591841941 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe.v
-1591841943 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc_control.v
+1591883008 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/pe.v
+1591880544 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc_control.v
 1591169689 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/macc.v
 1591340830 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_weight.v
 1591348228 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/load_fmap.v
 1591338800 /home/IC/Desktop/0-onchiptrain/OCT/OCT/3-pe_design/fifo.v
-1591776386 /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/pe_top.v
-1591842198 ../pe_top_tb.v
+1591879955 /home/IC/Desktop/0-onchiptrain/OCT/OCT/4-pe_array/pe_top.v
+1591879955 ../pe_top_tb.v
 1453442056 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/novas.tab
 1393560725 /opt/Synopsys/VCS2014/amd64/lib/vcsdp.tab
 5

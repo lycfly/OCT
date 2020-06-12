@@ -47,7 +47,7 @@ reg                    ce;
 
 reg                    start_weight_load;
 reg                    start_feature_load;
-reg                    start_psum_in_load;
+//reg                    start_psum_in_load;
 reg                    load_full_cloumn;
 reg                    mode;
 
@@ -99,7 +99,7 @@ initial begin
   ce = 0;
   start_weight_load = 0;
   start_feature_load = 0;
-  start_psum_in_load = 0;
+  //start_psum_in_load = 0;
   load_full_cloumn = 0;
   mode = 0;
   bus_weight_id = 0;
@@ -336,8 +336,8 @@ initial begin
       
       // test psum accumulate function
       #60;
-      start_psum_in_load <= 1;
-      #2 start_psum_in_load <= 0;
+      last_pe_data_valid <= 1;
+      #2 last_pe_data_valid <= 1;
       last_pe_data_valid <= 1;
 
       #2 last_pe_data_in <= 1;
@@ -408,6 +408,16 @@ initial begin
    join
    
    wait(shift_finish_flg==1);
+     @(posedge clk);
+    last_pe_data_valid <= 1;
+    #2 last_pe_data_valid <= 1;
+
+    last_pe_data_valid <= 1;
+    #2 last_pe_data_in <= 1;
+    repeat(8) begin
+      #2 last_pe_data_in <= last_pe_data_in + 1;
+    end
+    last_pe_data_valid <= 0;
    @(posedge clk);
    load_full_cloumn <= 1;
    start_feature_load <= 1;
@@ -424,16 +434,7 @@ initial begin
    transform_fmap_data(25,36);
    
     wait(clip_finish_flg ==1);
-    @(posedge clk);
-    start_psum_in_load <= 1;
-    #2 start_psum_in_load <= 0;
-
-    last_pe_data_valid <= 1;
-    #2 last_pe_data_in <= 1;
-    repeat(8) begin
-      #2 last_pe_data_in <= last_pe_data_in + 1;
-    end
-    last_pe_data_valid <= 0;
+  
 
     @(posedge clk);
     psum_out_start_in <= 1;
@@ -464,7 +465,7 @@ U_PE_TOP_0
    .ce                        ( ce                        ),
    .start_weight_load         ( start_weight_load         ),
    .start_feature_load        ( start_feature_load        ),
-   .start_psum_in_load        ( start_psum_in_load        ),
+   //.start_psum_in_load        ( start_psum_in_load        ),
    .load_full_cloumn          ( load_full_cloumn          ),
    .mode                      ( mode                      ),
    .bus_weight_id             ( bus_weight_id             ),

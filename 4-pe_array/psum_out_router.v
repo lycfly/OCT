@@ -40,8 +40,8 @@ output wire                                     data_to_bus_en
 
 );
 wire id_equal;
-assign id_equal = (stored_id==source_id);
 reg  [ID_WIDTH-1:0]    stored_id;
+assign id_equal = (stored_id==source_id);
 
 always @(posedge clk or negedge rst_n) begin
   if (!rst_n) begin

@@ -17,8 +17,9 @@
 
 module psum_in_router
 #(
-	parameter  DATA_WIDTH = 16,
-    parameter  ID_WIDTH   = 8
+	parameter  DATA_WIDTH      = 16,
+    parameter  PSUM_DATA_WIDTH = 48,
+    parameter  ID_WIDTH        = 8
     
 )
 (
@@ -32,16 +33,17 @@ input             [ID_WIDTH-1:0]                dest_id,                   //inp
 
 input            [DATA_WIDTH-1:0]				bus_data_in,
 input                                           bus_data_valid,
-input            [DATA_WIDTH-1:0]				last_pe_data_in,
+input            [PSUM_DATA_WIDTH-1:0]          last_pe_data_in,
 input                                           last_pe_data_valid,
 input                                           pe_mac_finish,             // pe mac finish signal 
 
-output reg signed [DATA_WIDTH-1:0]				pe_psum_in,     
+output reg       [PSUM_DATA_WIDTH-1:0]          pe_psum_in,     
 output reg                                      pe_psum_in_en,
 output wire                                     pe_ready                   // to psum in bus control
 
 );
 
+localparam WIDTH_GAP_NUM = PSUM_DATA_WIDTH-DATA_WIDTH;
 reg  [ID_WIDTH-1:0]    stored_id;
 
 always @(posedge clk or negedge rst_n) begin
@@ -65,13 +67,13 @@ always @(*) begin
 	2'b00: begin
 	           pe_psum_in = 0;
 	           pe_psum_in_en = 0;
-	       end
+             end
 	2'b01: begin
 	           pe_psum_in = last_pe_data_in;
 	           pe_psum_in_en = last_pe_data_valid;
            end   
 	2'b10: begin
-	           pe_psum_in = bus_data_in;
+	           pe_psum_in = {{WIDTH_GAP_NUM{bus_data_in[DATA_WIDTH-1]}},bus_data_in};
 	           pe_psum_in_en = bus_data_valid;
            end    
 	2'b11: begin

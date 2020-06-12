@@ -53,8 +53,7 @@ input                                           ce,                       // id 
 
 input                                           start_weight_load,        //start weight  load
 input                                           start_feature_load,       //start feature load
-input                                           start_psum_in_load,       //start psum_in load
-input                                           start_psum_out,           //bus read start
+//input                                           start_psum_in_load,       //start psum_in load
 input                                           load_full_cloumn,         
 input                                           mode,                     // 1: clip and shift conv mode; 0: normal 1-D conv
 
@@ -78,7 +77,7 @@ input                                           bus_feature_valid,
 input             [DATA_WIDTH-1:0]              bus_psum_in,
 input                                           bus_psum_in_valid,
  
-input             [DATA_WIDTH-1:0]              last_pe_data_in,
+input             [PSUM_DATA_WIDTH-1:0]         last_pe_data_in,
 input                                           last_pe_data_valid,
 
 input                                           psum_out_start_in,
@@ -94,14 +93,14 @@ output wire                                     shift_finish_flg,
 output wire                                     clip_finish_flg,
 
 output wire                                     psum_out_to_next_pe_valid,
-output wire        [DATA_WIDTH-1:0]             psum_out_to_next_pe
+output wire        [PSUM_DATA_WIDTH-1:0]        psum_out_to_next_pe
 );
 
 wire       [DATA_WIDTH-1:0]              pe_weight_in;
 wire                                     pe_weight_in_en;
 wire       [DATA_WIDTH-1:0]              pe_feature_in;
 wire                                     pe_feature_in_en;
-wire       [DATA_WIDTH-1:0]              pe_psum_in;
+wire       [PSUM_DATA_WIDTH-1:0]         pe_psum_in;
 wire                                     pe_psum_in_en;
 
 Router #(.DATA_WIDTH(DATA_WIDTH),
@@ -136,8 +135,9 @@ ifmap_cloumn_mc(
 wire pe_mac_finish;
 assign pe_mac_finish = mac_finish;
 
-psum_in_router #(.DATA_WIDTH(DATA_WIDTH),
-                 .ID_WIDTH  (ID_WIDTH))
+psum_in_router #(.DATA_WIDTH(DATA_WIDTH), 
+                 .PSUM_DATA_WIDTH(PSUM_DATA_WIDTH),
+                 .ID_WIDTH(ID_WIDTH))
 inpsum_cloumn_mc(
      .clk(clk),
      .rst_n(rst_n),
@@ -154,8 +154,16 @@ inpsum_cloumn_mc(
      .pe_psum_in_en(pe_psum_in_en),
      .pe_ready(pe_psum_in_load_ready)
     );
-wire [DATA_WIDTH-1:0] psum_from_pe;
+
+// 注：pe到上一级pe的psum位宽不变，但是到bus的psum out需要截位到bus位宽。
+wire signed [DATA_WIDTH-1:0] psum_from_pe_after_clip;
 wire psum_from_pe_en;
+// clip the psum to data width
+wire signed [PSUM_DATA_WIDTH-1: 0] psum_from_pe_tmp;
+assign psum_from_pe_after_clip = (psum_from_pe_tmp > ((1 << (DATA_WIDTH-1))-1)) ? ((1 << (DATA_WIDTH-1))-1) : ( (psum_from_pe_tmp < -(1 << (DATA_WIDTH-1))) ? -(1 << (DATA_WIDTH-1)) : {psum_from_pe_tmp[PSUM_DATA_WIDTH-1],psum_from_pe_tmp[DATA_WIDTH-2:0]});
+
+assign psum_out_to_next_pe = psum_from_pe_tmp;
+assign psum_out_to_next_pe_valid = psum_from_pe_en;
 
 wire start_psum_out;
 wire psum_out_start_out;
@@ -170,7 +178,7 @@ outpsum_clounn_mc(
      .ce(ce),
      .source_id(bus_outpsum_id),
      .dest_id(pe_outpsum_id),
-     .data_from_pe(psum_from_pe),
+     .data_from_pe(psum_from_pe_after_clip),
      .data_from_pe_en(psum_from_pe_en),
      .psum_out_start_in(psum_out_start_in),
      .psum_out_start_out(psum_out_start_out),
@@ -180,8 +188,6 @@ outpsum_clounn_mc(
 
 wire                        fifo_full_filter;
 wire                        fifo_full_fmap;
-
-wire [DATA_WIDTH-1:0]  psum_out;
 
 assign pe_weight_load_ready = !fifo_full_filter;
 assign pe_ifmap_load_ready = !fifo_full_fmap;
@@ -207,8 +213,8 @@ U_PE_0
    .start_config       ( start_config       ),
    .start_weight_load  ( start_weight_load  ),
    .start_feature_load ( start_feature_load ),
-   .start_psum_in_load ( start_psum_in_load ),
-   .start_psum_out     ( start_psum_out     ),   
+   //.start_psum_in_load ( start_psum_in_load ),
+   .start_psum_out     ( psum_out_start_out ),   
    .load_full_cloumn   ( load_full_cloumn   ),
    .mode               ( mode               ),
 
@@ -218,7 +224,7 @@ U_PE_0
    .feature_in_en      ( pe_feature_in_en   ),
    .weight_in          ( pe_weight_in       ),
    .weight_in_en       ( pe_weight_in_en    ),
-   .psum_out           ( psum_from_pe       ),
+   .psum_out           ( psum_from_pe_tmp   ),
    .psum_out_en        ( psum_from_pe_en    ),
 
    .mac_finish         ( mac_finish         ),
